@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/image_movie"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:padding="@dimen/padding_small"
+        android:scaleType="centerCrop"
+        android:transitionName="poster"
+        tools:ignore="ContentDescription,UnusedAttribute" />
+
+    <ProgressBar
+        android:id="@android:id/progress"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_movie"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/text_movie_title"
+            style="@style/TextViewHead"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+        <TextView
+            android:id="@+id/text_movie_overview"
+            style="@style/TextViewDetail"
+            android:layout_below="@id/text_movie_title"
+            android:ellipsize="end"
+            android:maxLines="5" />
+
+        <TextView
+            android:id="@+id/text_movie_rating"
+            style="@style/TextViewSubHead"
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/text_movie_overview" />
+
+        <TextView
+            android:id="@+id/text_movie_release_date"
+            style="@style/TextViewSubHead"
+            android:layout_width="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/text_movie_overview" />
+    </RelativeLayout>
+
+</RelativeLayout>

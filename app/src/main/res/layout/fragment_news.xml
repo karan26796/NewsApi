@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/newsRefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="UnusedAttribute,HardcodedText">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_blue_grey_50">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="100dp">
+
+            <TextView
+                style="@style/TextViewHead"
+                android:layout_width="wrap_content"
+                android:text="Top News" />
+
+            <TextView
+                android:id="@+id/text_top_news"
+                style="@style/TextViewHead"
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="View All"
+                android:textColor="@color/md_blue_500" />
+
+            <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+                android:id="@+id/recycler_news_headlines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_top_news"
+                android:nestedScrollingEnabled="false"
+                app:shimmer_demo_child_count="1"
+                app:shimmer_demo_layout="@layout/item_news_headlines"
+                app:shimmer_demo_layout_manager_type="linear_vertical" />
+
+            <!--<View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="@dimen/margin_small"
+                android:background="@color/md_grey_300" />-->
+
+            <TextView
+
+                style="@style/TextViewHead"
+                android:layout_below="@id/recycler_news_headlines"
+                android:text="Business" />
+
+            <TextView
+                android:id="@+id/text_business_news"
+                style="@style/TextViewHead"
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/recycler_news_headlines"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="View All"
+                android:textColor="@color/md_blue_500" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_news_business"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_business_news"
+                android:background="@android:color/white"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="vertical" />
+
+            <!--<View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="@dimen/margin_small"
+                android:background="@color/md_grey_300" />
+-->
+            <TextView
+                style="@style/TextViewHead"
+                android:layout_below="@id/recycler_news_business"
+                android:text="Sports" />
+
+            <TextView
+                android:id="@+id/text_sports_news"
+                style="@style/TextViewHead"
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/recycler_news_business"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="View All"
+                android:textColor="@color/md_blue_500" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_news_sports"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_sports_news"
+                android:background="@android:color/white"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="vertical" />
+
+            <!--<View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="@dimen/margin_small"
+                android:background="@color/md_grey_300" />-->
+
+            <TextView
+                style="@style/TextViewHead"
+                android:layout_below="@id/recycler_news_sports"
+                android:text="Health" />
+
+            <TextView
+                android:id="@+id/text_health_news"
+                style="@style/TextViewHead"
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/recycler_news_sports"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="View All"
+                android:textColor="@color/md_blue_500" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_news_health"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_health_news"
+                android:background="@android:color/white"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="vertical" />
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>
