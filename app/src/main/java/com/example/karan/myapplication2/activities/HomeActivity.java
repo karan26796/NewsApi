@@ -1,5 +1,6 @@
 package com.example.karan.myapplication2.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,11 +13,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.karan.myapplication2.R;
 import com.example.karan.myapplication2.adapter.HomeViewPagerAdapter;
+import com.example.karan.myapplication2.firabasemanager.FirebaseAuthentication;
 import com.example.karan.myapplication2.fragment.MoviesFragment;
 import com.example.karan.myapplication2.fragment.NewsFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener
@@ -27,12 +31,15 @@ public class HomeActivity extends BaseActivity
     NavigationView navigationView;
     TabLayout tabLayout;
     ViewPager viewPager;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setUpToolbar(0);
+        mAuth = FirebaseAuth.getInstance();
+
         tabLayout = findViewById(R.id.home_tab_layout);
         viewPager = findViewById(R.id.home_viewpager);
         fab = findViewById(R.id.fab);
@@ -47,6 +54,7 @@ public class HomeActivity extends BaseActivity
         tabLayout.setupWithViewPager(viewPager);
 
         navigationView = findViewById(R.id.nav_view);
+        setNavigationView();
         navigationView.setNavigationItemSelectedListener(this);
         fab.setOnClickListener(this);
     }
@@ -56,7 +64,7 @@ public class HomeActivity extends BaseActivity
         drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (mAuth.getCurrentUser() != null) {
             super.onBackPressed();
         }
     }
@@ -76,7 +84,9 @@ public class HomeActivity extends BaseActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            FirebaseAuthentication firebaseAuthentication = new FirebaseAuthentication(this);
+            firebaseAuthentication.logoutUser();
             return true;
         }
 
@@ -94,18 +104,10 @@ public class HomeActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_history) {
+            startActivity(new Intent(this, HistoryActivity.class));
+        } else if (id == R.id.nav_bookmarks) {
+            startActivity(new Intent(this, BookmarkActivity.class));
         }
 
         drawer = findViewById(R.id.drawer_layout);
@@ -124,5 +126,16 @@ public class HomeActivity extends BaseActivity
         adapter.addFragment(new MoviesFragment(), "Movies");
         adapter.addFragment(new NewsFragment(), "News");
         viewPager.setAdapter(adapter);
+    }
+
+    private void setNavigationView() {
+        TextView mUserEmail, mUserName;
+        mUserEmail = navigationView.getHeaderView(0)
+                .findViewById(R.id.text_email);
+        mUserName = navigationView.getHeaderView(0)
+                .findViewById(R.id.text_username);
+        if (mAuth.getCurrentUser() != null) {
+            mUserEmail.setText(mAuth.getCurrentUser().getEmail());
+        }
     }
 }

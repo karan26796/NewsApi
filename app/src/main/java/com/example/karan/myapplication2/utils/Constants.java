@@ -11,4 +11,5 @@ public class Constants {
     public static final String MOVIE_BASE_URL = "http://api.themoviedb.org/3/";
     public static final String NEWS_BASE_URL = "http://newsapi.org/v2/";
 
+    public static final String USERS_KEY = "users";
 }

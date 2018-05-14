@@ -11,11 +11,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class News implements Parcelable {
     @SerializedName("source")
-    private Source source;
+    public Source source;
     @SerializedName("author")
     private String author;
     @SerializedName("title")
-    private String title;
+    public String title;
     @SerializedName("description")
     private String description;
     @SerializedName("url")
@@ -32,6 +32,9 @@ public class News implements Parcelable {
         url = in.readString();
         urlToImage = in.readString();
         date = in.readString();
+    }
+
+    public News() {
     }
 
     public static final Creator<News> CREATOR = new Creator<News>() {
@@ -95,7 +98,7 @@ public class News implements Parcelable {
     }
 
     public String getDate() {
-        return date.substring(0, 10);
+        return date;
     }
 
     public void setDate(String date) {
@@ -117,11 +120,14 @@ public class News implements Parcelable {
         dest.writeString(date);
     }
 
-    public static class Source implements Parcelable{
+    public static class Source implements Parcelable {
         @SerializedName("name")
         String name;
         @SerializedName("id")
         String id;
+
+        public Source() {
+        }
 
         protected Source(Parcel in) {
             name = in.readString();

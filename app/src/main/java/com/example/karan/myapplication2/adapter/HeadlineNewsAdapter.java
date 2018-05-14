@@ -54,8 +54,9 @@ public class HeadlineNewsAdapter extends RecyclerView.Adapter<HeadlineNewsAdapte
         //holder.mDetail.setText(mNewsList.get(position).getDescription());
         //holder.mSource.setText(mNewsList.get(position).getSource().getName());
         String source = "Source: ";
-        holder.mDate.setText(source.concat(mNewsList.get(position).getSource().getName().concat("| ")
-                .concat(mNewsList.get(position).getDate())));
+        holder.mDate.setText(source.concat(mNewsList.get(position).getSource()
+                .getName().concat("| ")
+                .concat(mNewsList.get(position).getDate().substring(0,10))));
         holder.mProgress.setVisibility(View.VISIBLE);
         Picasso.get()
                 .load(mNewsList.get(position).getUrlToImage())

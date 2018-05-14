@@ -23,7 +23,8 @@
             android:id="@+id/all_news_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="@android:color/black" />
+            app:tabIndicatorColor="@android:color/black"
+            app:tabMode="scrollable" />
 
     </android.support.design.widget.AppBarLayout>
 

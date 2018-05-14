@@ -15,6 +15,7 @@
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -28,7 +29,7 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="TextViewHead" parent="@style/TextAppearance.AppCompat.Subhead">
+    <style name="TextViewHead">
         <item name="android:textColor">#c8000000</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -42,7 +43,7 @@
         <item name="android:paddingStart">@dimen/padding_small</item>
     </style>
 
-    <style name="TextViewSubHead" parent="@style/TextAppearance.AppCompat.Subhead">
+    <style name="TextViewSubHead">
         <item name="android:textColor">#96332a2a</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -55,12 +56,13 @@
         <item name="android:paddingBottom">@dimen/padding_smallest</item>
     </style>
 
-    <style name="TextViewDetail" parent="@style/TextAppearance.AppCompat.Subhead">
+    <style name="TextViewDetail">
         <item name="android:textColor">#b4000000</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14sp</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">serif</item>
         <item name="android:paddingEnd">@dimen/padding_small</item>
         <item name="android:paddingStart">@dimen/padding_small</item>
         <item name="android:paddingBottom">@dimen/padding_smallest</item>

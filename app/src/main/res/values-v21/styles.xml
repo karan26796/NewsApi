@@ -4,7 +4,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:typeface">serif</item>
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -12,6 +11,57 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="colorAccent">@color/md_indigo_A400</item>
         <item name="colorPrimary">@color/md_grey_100</item>
+        <item name="coordinatorLayoutStyle">@style/Widget.Design.CoordinatorLayout</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Button" parent="Widget.AppCompat.Button.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">@dimen/padding_small</item>
+        <item name="android:layout_margin">@dimen/margin_small</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="TextViewHead">
+        <item name="android:textColor">#c8000000</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingTop">@dimen/padding_smallest</item>
+        <item name="android:paddingBottom">@dimen/padding_smallest</item>
+        <item name="android:paddingEnd">@dimen/padding_small</item>
+        <item name="android:paddingStart">@dimen/padding_small</item>
+    </style>
+
+    <style name="TextViewSubHead">
+        <item name="android:textColor">#96332a2a</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:paddingStart">@dimen/padding_small</item>
+        <item name="android:paddingEnd">@dimen/padding_small</item>
+        <item name="android:drawablePadding">@dimen/padding_smallest</item>
+        <item name="android:maxLength">15</item>
+        <item name="android:paddingTop">@dimen/padding_smallest</item>
+        <item name="android:paddingBottom">@dimen/padding_smallest</item>
+    </style>
+
+    <style name="TextViewDetail">
+        <item name="android:textColor">#b4000000</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:paddingEnd">@dimen/padding_small</item>
+        <item name="android:paddingStart">@dimen/padding_small</item>
+        <item name="android:paddingBottom">@dimen/padding_smallest</item>
     </style>
 
 </resources>

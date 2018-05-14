@@ -9,7 +9,6 @@
         android:id="@+id/image_movie"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:padding="@dimen/padding_small"
         android:scaleType="centerCrop"
         android:transitionName="poster"
         tools:ignore="ContentDescription,UnusedAttribute" />
@@ -25,8 +24,7 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/image_movie"
-        android:background="@android:color/white">
+        android:layout_below="@id/image_movie">
 
         <TextView
             android:id="@+id/text_movie_title"

@@ -4,29 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.karan.myapplication2.activities.LoginActivity"
-    tools:ignore="HardcodedText">
+    tools:context="com.example.karan.myapplication2.activities.BookmarkActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/login_activity_toolbar"
+            android:id="@+id/activity_bookmarks_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="scrollable" />
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/login_viewpager"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshBookmark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/bookmark_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>

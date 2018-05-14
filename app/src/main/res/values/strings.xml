@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application2</string>
+    <string name="app_name">News App</string>
     <string name="title_activity_home">HomeActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -8,4 +8,6 @@
     <string name="action_settings">Settings</string>
     <string name="newsAPIKey">fca34731aaeb476da91cfb7a077c494b</string>
     <string name="search">Search</string>
+    <string name="toast_auth_failed">failed</string>
+    <string name="toast_email_error">fail</string>
 </resources>

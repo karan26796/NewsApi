@@ -1,5 +1,6 @@
 package com.example.karan.myapplication2.adapter;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,12 +8,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.karan.myapplication2.R;
 import com.example.karan.myapplication2.retrofit.news.general.News;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -28,15 +33,25 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
     private List<News> mNewsList;
     private onNewsClickListener mClickListener;
     private int length;
+    private DatabaseReference mDatabaseHistory, mDatabaseBookmark;
 
     public NewsAdapter(List<News> mNewsList, onNewsClickListener mClickListener, int length) {
         this.mNewsList = mNewsList;
         this.mClickListener = mClickListener;
         this.length = length;
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mDatabaseHistory = FirebaseDatabase.getInstance().getReference()
+                .child("History")
+                .child(mAuth.getCurrentUser().getUid());
+        mDatabaseBookmark = FirebaseDatabase.getInstance().getReference()
+                .child("Bookmarks")
+                .child(mAuth.getCurrentUser().getUid());
     }
 
     public interface onNewsClickListener {
         void onNewsClicked(View view, int position, Bundle bundle);
+
+        void onBookmarkClicked(View view, int position, Bundle bundle);
     }
 
     @NonNull
@@ -61,8 +76,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
         else
             holder.mDetail.setText("No data found");
 
-        holder.mDate.setText(mNewsList.get(position).getDate());
-        holder.mSource.setText(mNewsList.get(position).getSource().getName());
+        holder.mDate.setText(mNewsList.get(position).getDate().substring(0, 10)
+                .concat(" | ").concat(mNewsList.get(position).getSource().getName()));
+        //holder.mSource.setText(mNewsList.get(position).getSource().getName());
         holder.mProgress.setVisibility(View.VISIBLE);
         Picasso.get()
                 .load(mNewsList.get(position).getUrlToImage())
@@ -89,6 +105,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
         TextView mHead, mAuthor, mDetail, mDate, mSource;
         ImageView mNewsImage;
         ProgressBar mProgress;
+        ImageButton mBookmarkBtn;
 
         NewsHolder(View itemView) {
             super(itemView);
@@ -98,20 +115,41 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
             mAuthor = itemView.findViewById(R.id.text_news_author);
             mDate = itemView.findViewById(R.id.text_news_date);
             mDetail = itemView.findViewById(R.id.text_news_detail);
-            mSource = itemView.findViewById(R.id.text_news_source);
+            //mSource = itemView.findViewById(R.id.text_news_source);
+            mBookmarkBtn = itemView.findViewById(R.id.bookmark_btn);
 
             mNewsImage = itemView.findViewById(R.id.image_news);
             itemView.setOnClickListener(this);
+            mBookmarkBtn.setOnClickListener(this);
+
+        }
+
+        public void bindData(final Context context, final News news) {
+            mHead.setText(news.getTitle());
+            mSource.setText(news.getSource().getName());
         }
 
         @Override
         public void onClick(View v) {
             Bundle bundle = new Bundle();
             bundle.putParcelable("news", mNewsList.get(getAdapterPosition()));
-            try {
-                mClickListener.onNewsClicked(v, getAdapterPosition(), bundle);
-            } catch (NullPointerException e) {
-                Log.e("news", e.getMessage());
+            if (v == itemView) {
+                try {
+                    mClickListener.onNewsClicked(v, getAdapterPosition(), bundle);
+                    mDatabaseHistory.child(mNewsList.get(getAdapterPosition()).getDate())
+                            .setValue(mNewsList.get(getAdapterPosition()));
+                } catch (NullPointerException e) {
+                    Log.e("news", e.getMessage());
+                }
+            }
+            if (v == mBookmarkBtn) {
+                try {
+                    mClickListener.onBookmarkClicked(v, getAdapterPosition(), bundle);
+                    mDatabaseBookmark.child(mNewsList.get(getAdapterPosition()).getDate())
+                            .setValue(mNewsList.get(getAdapterPosition()));
+                } catch (NullPointerException e) {
+                    Log.e("news", e.getMessage());
+                }
             }
         }
     }

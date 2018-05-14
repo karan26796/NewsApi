@@ -174,6 +174,11 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         News news = bundle.getParcelable("news");
                         launchCustomTab(news.getUrl());
                     }
+
+                    @Override
+                    public void onBookmarkClicked(View view, int position, Bundle bundle) {
+                        Toast.makeText(getContext(), "Added", Toast.LENGTH_SHORT).show();
+                    }
                 }, 3));
                 newsRefresh.setRefreshing(false);
             }

@@ -5,11 +5,16 @@ import android.graphics.Typeface;
 
 import java.lang.reflect.Field;
 
-/**
- * Created by karan on 5/12/2018.
- */
-
 public class TypefaceUtil {
+
+    /**
+     * Using reflection to override default typeface
+     * NOTICE: DO NOT FORGET TO SET TYPEFACE FOR APP THEME AS DEFAULT TYPEFACE WHICH WILL BE OVERRIDDEN
+     * @param context to work with assets
+     * @param defaultFontNameToOverride for example "monospace"
+     * @param customFontFileNameInAssets file name of the font from assets
+     */
+    @SuppressWarnings("SameParameterValue")
     public static void overrideFont(Context context, String defaultFontNameToOverride, String customFontFileNameInAssets) {
 
         try {

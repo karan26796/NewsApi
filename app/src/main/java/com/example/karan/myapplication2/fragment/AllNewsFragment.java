@@ -1,5 +1,6 @@
 package com.example.karan.myapplication2.fragment;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
@@ -33,20 +34,30 @@ import retrofit2.Response;
  * Created by karan on 5/3/2018.
  */
 
+@SuppressLint("ValidFragment")
 public class AllNewsFragment extends Fragment {
     RecyclerView recyclerView;
     CustomTabActivityHelper mCustomTabActivityHelper;
-    private CustomTabActivityHelper.CustomTabConnectionCallback mConnectionCallback;
+    CustomTabActivityHelper.CustomTabConnectionCallback mConnectionCallback;
+    String country, category;
+
+    public AllNewsFragment() {
+    }
+
+    public AllNewsFragment(String country, String category) {
+        this.country = country;
+        this.category = category;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the fragment's layout
-        View view = inflater.inflate(R.layout.fragment_base, container, false);
+        View view = inflater.inflate(R.layout.fragment_all_news, container, false);
         setupCustomTabHelper();
         recyclerView = view.findViewById(R.id.recycler_news_all);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        getNews("in", "business", recyclerView);
+        getNews(country, category, recyclerView);
         return view;
     }
 
@@ -80,7 +91,12 @@ public class AllNewsFragment extends Fragment {
                         News news = bundle.getParcelable("news");
                         launchCustomTab(news.getUrl());
                     }
-                },newsList.size()));
+
+                    @Override
+                    public void onBookmarkClicked(View view, int position, Bundle bundle) {
+                        Toast.makeText(getContext(), "Added", Toast.LENGTH_SHORT).show();
+                    }
+                }, newsList.size()));
             }
 
             @Override
@@ -100,4 +116,5 @@ public class AllNewsFragment extends Fragment {
         this.mCustomTabActivityHelper = new CustomTabActivityHelper();
         this.mCustomTabActivityHelper.setConnectionCallback(this.mConnectionCallback);
     }
+
 }

@@ -11,6 +11,6 @@ public class ApiDemos extends Application {
     public void onCreate() {
         super.onCreate();
         TypefaceUtil.overrideFont(getApplicationContext(), "SERIF",
-                "font/core_sans_medium.otf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
+                "fonts/core_sans_regular.otf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
     }
 }

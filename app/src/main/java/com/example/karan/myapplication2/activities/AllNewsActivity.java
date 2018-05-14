@@ -7,15 +7,16 @@ import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 
 import com.example.karan.myapplication2.R;
-import com.example.karan.myapplication2.adapter.HomeViewPagerAdapter;
+import com.example.karan.myapplication2.adapter.AllNewsPagerAdapter;
 import com.example.karan.myapplication2.fragment.AllNewsFragment;
 import com.example.karan.myapplication2.fragment.NewsFragment;
 
 public class AllNewsActivity extends BaseActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
-    String fragmentArray[] = {"Top News",
-            "Business", "Health", "Sports"}, category;
+    String fragmentArray[] = {"Top News", "Business", "Health", "Sports"},
+            category, categoryArray[] = {"general", "business", "health", "sports"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +44,10 @@ public class AllNewsActivity extends BaseActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(getSupportFragmentManager());
-        for (int i = 0; i < 4; i++) {
-            adapter.addFragment(new AllNewsFragment(), fragmentArray[i]);
-        }
+        AllNewsPagerAdapter adapter = new AllNewsPagerAdapter(getSupportFragmentManager());
+        for (int i = 0; i < 4; i++)
+            adapter.addFragment(new AllNewsFragment("in", categoryArray[i]), fragmentArray[i]);
+
         viewPager.setAdapter(adapter);
     }
 
