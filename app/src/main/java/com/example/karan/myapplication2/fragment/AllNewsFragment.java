@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,8 +36,9 @@ import retrofit2.Response;
  */
 
 @SuppressLint("ValidFragment")
-public class AllNewsFragment extends Fragment {
+public class AllNewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     RecyclerView recyclerView;
+    SwipeRefreshLayout mSwipeRefresh;
     CustomTabActivityHelper mCustomTabActivityHelper;
     CustomTabActivityHelper.CustomTabConnectionCallback mConnectionCallback;
     String country, category;
@@ -54,10 +56,13 @@ public class AllNewsFragment extends Fragment {
         // Inflate the fragment's layout
         View view = inflater.inflate(R.layout.fragment_all_news, container, false);
         setupCustomTabHelper();
+        mSwipeRefresh = view.findViewById(R.id.allNewsRefresh);
+
         recyclerView = view.findViewById(R.id.recycler_news_all);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         getNews(country, category, recyclerView);
+        mSwipeRefresh.setOnRefreshListener(this);
         return view;
     }
 
@@ -72,6 +77,7 @@ public class AllNewsFragment extends Fragment {
     }
 
     private void getNews(String country, String category, final RecyclerView recyclerView) {
+        mSwipeRefresh.setRefreshing(true);
         NewsApiInterface apiInterface = NewsApiClient.getClient()
                 .create(NewsApiInterface.class);
         Call<NewsResponse> responseCall = apiInterface.getTopHeadlines(country, category, Constants.NEWS_API_KEY);
@@ -97,11 +103,13 @@ public class AllNewsFragment extends Fragment {
                         Toast.makeText(getContext(), "Added", Toast.LENGTH_SHORT).show();
                     }
                 }, newsList.size()));
+                mSwipeRefresh.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<NewsResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                mSwipeRefresh.setRefreshing(false);
             }
         });
     }
@@ -117,4 +125,8 @@ public class AllNewsFragment extends Fragment {
         this.mCustomTabActivityHelper.setConnectionCallback(this.mConnectionCallback);
     }
 
+    @Override
+    public void onRefresh() {
+        getNews(country, category, recyclerView);
+    }
 }

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/recycler_news_all"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/allNewsRefresh"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:scrollbarSize="2dp"
-    app:fastScrollEnabled="true"
-    app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
-    app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
-    app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
-    app:fastScrollVerticalTrackDrawable="@drawable/line_drawable" />
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_news_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarSize="2dp"
+        android:scrollbars="vertical" />
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -23,6 +23,7 @@
             android:id="@+id/home_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabGravity="fill"
             app:tabIndicatorColor="@android:color/black" />
 
     </android.support.design.widget.AppBarLayout>
@@ -39,6 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@drawable/ic_menu_camera" />
 
+    <include
+        android:id="@+id/bottom_sheet_options"
+        layout="@layout/layout_bottom_sheet" />
 </android.support.design.widget.CoordinatorLayout>

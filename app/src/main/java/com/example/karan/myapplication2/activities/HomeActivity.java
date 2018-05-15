@@ -2,25 +2,33 @@ package com.example.karan.myapplication2.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.karan.myapplication2.R;
 import com.example.karan.myapplication2.adapter.HomeViewPagerAdapter;
+import com.example.karan.myapplication2.adapter.OptionsAdapter;
 import com.example.karan.myapplication2.firabasemanager.FirebaseAuthentication;
 import com.example.karan.myapplication2.fragment.MoviesFragment;
 import com.example.karan.myapplication2.fragment.NewsFragment;
+import com.example.karan.myapplication2.model.Options;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
 
 public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener
@@ -32,6 +40,11 @@ public class HomeActivity extends BaseActivity
     TabLayout tabLayout;
     ViewPager viewPager;
     FirebaseAuth mAuth;
+    ArrayList<Options> mOptionsList;
+
+    LinearLayout layoutBottomSheet;
+    BottomSheetBehavior sheetBehavior;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +62,42 @@ public class HomeActivity extends BaseActivity
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        layoutBottomSheet = findViewById(R.id.bottom_sheet_options);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        recyclerView = layoutBottomSheet.findViewById(R.id.options_recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        //sets the behaviour of linear layout to a bottom sheet
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
+        sheetBehavior.setPeekHeight(0);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
 
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        //fabBottomSheet.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward));
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        //fabBottomSheet.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward));
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+        tabLayout.setupWithViewPager(viewPager);
+        setRecyclerView();
         navigationView = findViewById(R.id.nav_view);
         setNavigationView();
         navigationView.setNavigationItemSelectedListener(this);
@@ -117,8 +162,11 @@ public class HomeActivity extends BaseActivity
 
     @Override
     public void onClick(View v) {
-        Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        } else {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -137,5 +185,21 @@ public class HomeActivity extends BaseActivity
         if (mAuth.getCurrentUser() != null) {
             mUserEmail.setText(mAuth.getCurrentUser().getEmail());
         }
+    }
+
+    private void setRecyclerView() {
+        mOptionsList = new ArrayList<>();
+        String optionsTitle[] = {"Bookmark", "History", "Exit", "Enter"};
+        int optionsDrawable[] = {R.drawable.ic_bookmark, R.drawable.ic_info,
+                R.drawable.ic_close, R.drawable.ic_menu_gallery};
+        for (int i = 0; i < optionsTitle.length; i++) {
+            mOptionsList.add(new Options(optionsTitle[i], optionsDrawable[i]));
+        }
+        recyclerView.setAdapter(new OptionsAdapter(mOptionsList, new OptionsAdapter.optionsClickListener() {
+            @Override
+            public void onOptionsClicked(View view, int position) {
+
+            }
+        }));
     }
 }

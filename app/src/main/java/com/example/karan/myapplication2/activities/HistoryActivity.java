@@ -57,10 +57,8 @@ public class HistoryActivity extends BaseActivity implements FirebaseAdapter.onN
         mHistoryRecycler = findViewById(R.id.history_recycler);
         mHistoryRecycler.setLayoutManager(new LinearLayoutManager(this));
         mHistoryRecycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        mSwipeLayout.setRefreshing(true);
 
         readData(adapter);
-        mHistoryRecycler.setAdapter(adapter);
         mSwipeLayout.setOnRefreshListener(this);
     }
 
@@ -75,8 +73,8 @@ public class HistoryActivity extends BaseActivity implements FirebaseAdapter.onN
 
             News news = bundle.getParcelable("news");
             launchCustomTab(news.getUrl());
-        }catch (NullPointerException e){
-            Log.e("History Activity",e.getMessage());
+        } catch (NullPointerException e) {
+            Log.e("History Activity", e.getMessage());
         }
     }
 
@@ -106,6 +104,7 @@ public class HistoryActivity extends BaseActivity implements FirebaseAdapter.onN
                     if (userDataSnapshot != null) {
                         mNewsList.add(userDataSnapshot.getValue(News.class));
                         adapter.notifyDataSetChanged();
+                        mHistoryRecycler.setAdapter(adapter);
                         mSwipeLayout.setRefreshing(false);
                     }
                 }

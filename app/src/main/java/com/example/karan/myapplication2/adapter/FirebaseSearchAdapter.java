@@ -25,20 +25,20 @@ import java.util.ArrayList;
 
 public class FirebaseSearchAdapter extends FirebaseRecyclerAdapter<News, FirebaseSearchAdapter.NewsViewHolder> {
 
-    private onNewsClickListener mListener;
+    private onSearchClickListener mListener;
     private ArrayList<News> mNewsList;
 
     public FirebaseSearchAdapter(Class<News> modelClass, int modelLayout,
                                  Class<NewsViewHolder> viewHolderClass, Query ref,
-                                 ArrayList<News> newsArrayList, onNewsClickListener mListener) {
+                                 ArrayList<News> newsArrayList, onSearchClickListener mListener) {
         super(modelClass, modelLayout, viewHolderClass, ref);
 
         this.mListener = mListener;
         this.mNewsList = newsArrayList;
     }
 
-    public interface onNewsClickListener {
-        void onNewsClicked(View view, int position, Bundle bundle);
+    public interface onSearchClickListener {
+        void onSearchClicked(View view, int position, Bundle bundle);
     }
 
     @Override
@@ -96,10 +96,9 @@ public class FirebaseSearchAdapter extends FirebaseRecyclerAdapter<News, Firebas
         @Override
         public void onClick(View v) {
             Bundle bundle = new Bundle();
-            mListener.onNewsClicked(v, getAdapterPosition(), bundle);
             bundle.putParcelable("news", mNewsList.get(getAdapterPosition()));
             try {
-                mListener.onNewsClicked(v, getAdapterPosition(), bundle);
+                mListener.onSearchClicked(v, getAdapterPosition(), bundle);
             } catch (NullPointerException e) {
                 Log.e("History News", e.getMessage());
             }

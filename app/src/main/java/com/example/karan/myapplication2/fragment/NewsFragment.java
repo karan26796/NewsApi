@@ -45,10 +45,10 @@ import retrofit2.Response;
 public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener
         , View.OnClickListener {
     ShimmerRecyclerView mTopNewsRecycler;
-    RecyclerView mNewsBusiness, mNewsHealth, mNewsSports;
+    RecyclerView mNewsBusiness, mNewsHealth, mNewsSports, mNewsTechnology;
     SwipeRefreshLayout newsRefresh;
     StartSnapHelper snapHelper;
-    TextView mBusiness, mSports, mTopNews, mHealth;
+    TextView mBusiness, mSports, mTopNews, mHealth, mTechnology;
     View view;
 
     CustomTabActivityHelper mCustomTabActivityHelper;
@@ -65,6 +65,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mNewsBusiness = view.findViewById(R.id.recycler_news_business);
         mNewsHealth = view.findViewById(R.id.recycler_news_health);
         mNewsSports = view.findViewById(R.id.recycler_news_sports);
+        mNewsTechnology = view.findViewById(R.id.recycler_news_technology);
 
         mTopNewsRecycler = view.findViewById(R.id.recycler_news_headlines);
 
@@ -76,6 +77,9 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         mNewsHealth.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mNewsHealth.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+
+        mNewsTechnology.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mNewsTechnology.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
         mTopNewsRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         snapHelper = new StartSnapHelper();
@@ -92,6 +96,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         getNews("in", "business", mNewsBusiness);
         getNews("in", "health", mNewsHealth);
         getNews("in", "sports", mNewsSports);
+        getNews("in", "technology", mNewsTechnology);
         return view;
     }
 
@@ -108,12 +113,14 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mHealth = view.findViewById(R.id.text_health_news);
         mBusiness = view.findViewById(R.id.text_business_news);
         mSports = view.findViewById(R.id.text_sports_news);
+        mTechnology = view.findViewById(R.id.text_technology_news);
         mTopNews = view.findViewById(R.id.text_top_news);
 
         mSports.setOnClickListener(this);
         mBusiness.setOnClickListener(this);
         mTopNews.setOnClickListener(this);
         mHealth.setOnClickListener(this);
+        mTechnology.setOnClickListener(this);
     }
 
     @Override
@@ -217,12 +224,15 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             case R.id.text_business_news:
                 category = Categories.BUSINESS.toString();
                 break;
+            case R.id.text_technology_news:
+                category = Categories.TECHNOLOGY.toString();
+                break;
         }
         startActivity(new Intent(getContext(), AllNewsActivity.class)
                 .putExtra("category", category));
     }
 
     public enum Categories {
-        SPORTS, TOP_NEWS, BUSINESS, HEALTH
+        SPORTS, TOP_NEWS, BUSINESS, HEALTH, TECHNOLOGY
     }
 }

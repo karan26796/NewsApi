@@ -14,8 +14,8 @@ import com.example.karan.myapplication2.fragment.NewsFragment;
 public class AllNewsActivity extends BaseActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
-    String fragmentArray[] = {"Top News", "Business", "Health", "Sports"},
-            category, categoryArray[] = {"general", "business", "health", "sports"};
+    String fragmentArray[] = {"Top News", "Business", "Sports", "Health", "Technology"},
+            category, categoryArray[] = {"general", "business", "sports", "health", "technology"};
 
 
     @Override
@@ -45,7 +45,7 @@ public class AllNewsActivity extends BaseActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         AllNewsPagerAdapter adapter = new AllNewsPagerAdapter(getSupportFragmentManager());
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < categoryArray.length; i++)
             adapter.addFragment(new AllNewsFragment("in", categoryArray[i]), fragmentArray[i]);
 
         viewPager.setAdapter(adapter);
@@ -59,10 +59,12 @@ public class AllNewsActivity extends BaseActivity {
                 return 0;
             else if (category.equals(NewsFragment.Categories.BUSINESS.toString()))
                 return 1;
-            else if (category.equals(NewsFragment.Categories.HEALTH.toString()))
-                return 2;
             else if (category.equals(NewsFragment.Categories.SPORTS.toString()))
+                return 2;
+            else if (category.equals(NewsFragment.Categories.HEALTH.toString()))
                 return 3;
+            else if (category.equals(NewsFragment.Categories.TECHNOLOGY.toString()))
+                return 4;
         }
         return 0;
     }

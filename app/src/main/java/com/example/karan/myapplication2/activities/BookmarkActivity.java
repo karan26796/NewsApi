@@ -3,6 +3,7 @@ package com.example.karan.myapplication2.activities;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.karan.myapplication2.R;
 import com.example.karan.myapplication2.adapter.FirebaseAdapter;
@@ -35,12 +37,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class BookmarkActivity extends BaseActivity implements FirebaseAdapter.onNewsHistoryClickListener
-        , SwipeRefreshLayout.OnRefreshListener, SearchView.OnQueryTextListener, TextWatcher {
+        , SwipeRefreshLayout.OnRefreshListener, SearchView.OnQueryTextListener, TextWatcher
+        , FirebaseSearchAdapter.onSearchClickListener {
     RecyclerView mBookmarkRecycler;
     DatabaseReference mDatabase;
+    Query mSearchQuery;
     FirebaseAuth mAuth;
     Menu menu;
     FirebaseAdapter adapter;
+    FirebaseSearchAdapter searchAdapter;
     SwipeRefreshLayout mSwipeLayout;
     CustomTabActivityHelper mCustomTabActivityHelper;
     CustomTabActivityHelper.CustomTabConnectionCallback mConnectionCallback;
@@ -54,6 +59,8 @@ public class BookmarkActivity extends BaseActivity implements FirebaseAdapter.on
         setContentView(R.layout.activity_bookmark);
         setUpToolbar(0);
         setupCustomTabHelper();
+        mToolbar.inflateMenu(R.menu.activity_bookmark);
+        menu = mToolbar.getMenu();
         searchView = (SearchView) menu.findItem(R.id.action_search)
                 .getActionView();
         searchView.isSubmitButtonEnabled();
@@ -64,27 +71,51 @@ public class BookmarkActivity extends BaseActivity implements FirebaseAdapter.on
         inputSearchText.setHint("Search...");
 
         mAuth = FirebaseAuth.getInstance();
-        if (mAuth.getCurrentUser() != null)
+        if (mAuth.getCurrentUser() != null) {
             mDatabase = FirebaseDatabase.getInstance()
                     .getReference()
                     .child("Bookmarks")
                     .child(mAuth.getCurrentUser().getUid());
 
+            mSearchQuery = FirebaseDatabase.getInstance()
+                    .getReference()
+                    .child("Bookmarks")
+                    .child(mAuth.getCurrentUser().getUid());
+        }
+
         adapter = new FirebaseAdapter(News.class, R.layout.item_news,
                 FirebaseAdapter.ViewHolder.class, mDatabase, mNewsList, this);
+
+        searchAdapter = new FirebaseSearchAdapter(News.class, R.layout.item_news,
+                FirebaseSearchAdapter.NewsViewHolder.class, mSearchQuery, mNewsList, this);
 
         mSwipeLayout = findViewById(R.id.swipeRefreshBookmark);
         mBookmarkRecycler = findViewById(R.id.bookmark_recycler);
         mBookmarkRecycler.setLayoutManager(new LinearLayoutManager(this));
         mBookmarkRecycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-        mSwipeLayout.setRefreshing(true);
-        searchView.setOnQueryTextListener(this);
+        //searchView.setOnQueryTextListener(this);
         //inputSearchText.addTextChangedListener(this);
 
         readData(adapter);
-        mBookmarkRecycler.setAdapter(adapter);
         mSwipeLayout.setOnRefreshListener(this);
+
+        MenuItemCompat.setOnActionExpandListener(menu.findItem(R.id.action_search),
+                new MenuItemCompat.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+
+                        mNewsList.clear();
+                        readData(adapter);
+                        return true;
+                    }
+                });
     }
 
     @Override
@@ -105,6 +136,8 @@ public class BookmarkActivity extends BaseActivity implements FirebaseAdapter.on
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
+                //mNewsList.clear();
+                //mBookmarkRecycler.setAdapter(searchAdapter);
         }
         return super.onOptionsItemSelected(item);
 
@@ -146,6 +179,7 @@ public class BookmarkActivity extends BaseActivity implements FirebaseAdapter.on
                     if (userDataSnapshot != null) {
                         mNewsList.add(userDataSnapshot.getValue(News.class));
                         adapter.notifyDataSetChanged();
+                        mBookmarkRecycler.setAdapter(adapter);
                         mSwipeLayout.setRefreshing(false);
                     }
                 }
@@ -159,36 +193,30 @@ public class BookmarkActivity extends BaseActivity implements FirebaseAdapter.on
         });
     }
 
-    private void searchBookmarks(String query) {
-        Query mBookmarkQuery;
-        mBookmarkQuery = mDatabase.orderByChild("title")
-                .startAt(query)
-                .endAt(query + "\uf8ff");
-        FirebaseSearchAdapter firebaseRecyclerAdapter = new FirebaseSearchAdapter(News.class, R.layout.item_news,
-                FirebaseSearchAdapter.NewsViewHolder.class, mBookmarkQuery, mNewsList, new FirebaseSearchAdapter.onNewsClickListener() {
-            @Override
-            public void onNewsClicked(View view, int position, Bundle bundle) {
-                News news = bundle.getParcelable("news");
-                launchCustomTab(news.getUrl());
-            }
-        });
-        mBookmarkRecycler.setAdapter(firebaseRecyclerAdapter);
-    }
-
-    private void setUpSearchToolbar() {
-
-    }
-
     @Override
     public boolean onQueryTextSubmit(String query) {
         mNewsList.clear();
-        adapter.notifyDataSetChanged();
-        if (query.length() != 0)
-            searchBookmarks(query);
-        else {
-            searchBookmarks("");
+
+        if (query.length() != 0) {
+            mSearchQuery.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        News news = dataSnapshot1.getValue(News.class);
+                        mNewsList.add(news);
+                    }
+                    searchAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else {
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -203,15 +231,15 @@ public class BookmarkActivity extends BaseActivity implements FirebaseAdapter.on
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (s.length() != 0) {
-            searchBookmarks(s.toString());
-        } else {
-            searchBookmarks("");
-        }
     }
 
     @Override
     public void afterTextChanged(Editable s) {
+
+    }
+
+    @Override
+    public void onSearchClicked(View view, int position, Bundle bundle) {
 
     }
 }
