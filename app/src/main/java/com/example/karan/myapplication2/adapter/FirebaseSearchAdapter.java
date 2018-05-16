@@ -1,5 +1,6 @@
 package com.example.karan.myapplication2.adapter;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -102,6 +103,16 @@ public class FirebaseSearchAdapter extends FirebaseRecyclerAdapter<News, Firebas
             } catch (NullPointerException e) {
                 Log.e("History News", e.getMessage());
             }
+        }
+
+        public void bindData(final Context context, final News user) {
+            mHead.setText(user.title);
+            mDetail.setText(user.description);
+            Picasso.get()
+                    .load(user.urlToImage)
+                    .placeholder(R.drawable.author_dot)
+                    .into(mNewsImage);
+
         }
     }
 }

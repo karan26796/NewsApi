@@ -33,8 +33,9 @@
 
         <activity android:name=".activities.NewsDetailActivity" />
         <activity android:name=".activities.AllNewsActivity" />
-        <activity android:name=".activities.HistoryActivity" />
-        <activity android:name=".activities.BookmarkActivity">
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/title_activity_main">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />

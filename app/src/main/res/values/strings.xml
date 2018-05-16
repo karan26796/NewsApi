@@ -10,4 +10,12 @@
     <string name="search">Search</string>
     <string name="toast_auth_failed">failed</string>
     <string name="toast_email_error">fail</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_headlines">Headlines</string>
+    <string name="title_all_news">All News</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_search">Search</string>
 </resources>

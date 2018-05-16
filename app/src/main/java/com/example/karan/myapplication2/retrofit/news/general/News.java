@@ -17,11 +17,11 @@ public class News implements Parcelable {
     @SerializedName("title")
     public String title;
     @SerializedName("description")
-    private String description;
+    public String description;
     @SerializedName("url")
     private String url;
     @SerializedName("urlToImage")
-    private String urlToImage;
+    public String urlToImage;
     @SerializedName("publishedAt")
     private String date;
 

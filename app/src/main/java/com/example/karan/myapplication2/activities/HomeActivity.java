@@ -42,9 +42,9 @@ public class HomeActivity extends BaseActivity
     FirebaseAuth mAuth;
     ArrayList<Options> mOptionsList;
 
+    RecyclerView recyclerView;
     LinearLayout layoutBottomSheet;
     BottomSheetBehavior sheetBehavior;
-    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +62,14 @@ public class HomeActivity extends BaseActivity
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        layoutBottomSheet = findViewById(R.id.bottom_sheet_options);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         recyclerView = layoutBottomSheet.findViewById(R.id.options_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        setupViewPager(viewPager);
+        layoutBottomSheet = findViewById(R.id.bottom_sheet_options);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
 
         //sets the behaviour of linear layout to a bottom sheet
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        setupViewPager(viewPager);
         sheetBehavior.setPeekHeight(0);
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -134,6 +134,10 @@ public class HomeActivity extends BaseActivity
             firebaseAuthentication.logoutUser();
             return true;
         }
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this, MainActivity.class));
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -150,9 +154,7 @@ public class HomeActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_history) {
-            startActivity(new Intent(this, HistoryActivity.class));
         } else if (id == R.id.nav_bookmarks) {
-            startActivity(new Intent(this, BookmarkActivity.class));
         }
 
         drawer = findViewById(R.id.drawer_layout);

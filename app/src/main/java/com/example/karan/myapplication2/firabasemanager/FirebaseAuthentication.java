@@ -9,8 +9,8 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.example.karan.myapplication2.R;
-import com.example.karan.myapplication2.activities.HomeActivity;
 import com.example.karan.myapplication2.activities.LoginActivity;
+import com.example.karan.myapplication2.activities.MainActivity;
 import com.example.karan.myapplication2.retrofit.usr.User;
 import com.example.karan.myapplication2.utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -71,7 +71,7 @@ public class FirebaseAuthentication {
                                     // dismiss progress dialog
                                     progressDialog.dismiss();
                                     // launch HomeScreenActivity when user registration is complete
-                                    Intent mainActivity = new Intent(mContext, HomeActivity.class);
+                                    Intent mainActivity = new Intent(mContext, MainActivity.class);
                                     mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     mContext.startActivity(mainActivity);
                                     // finish current activity
@@ -98,7 +98,7 @@ public class FirebaseAuthentication {
                     // dismiss progress dialog
                     mProgressDialog.dismiss();
                     // launch HomeScreenActivity when user registration is complete
-                    Intent mainActivity = new Intent(mContext, HomeActivity.class);
+                    Intent mainActivity = new Intent(mContext, MainActivity.class);
                     mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     mContext.startActivity(mainActivity);
                     // finish current activity

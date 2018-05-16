@@ -1,76 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_smaller"
-    app:cardUseCompatPadding="true">
+    android:background="?selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/image_news_top"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <ProgressBar
+        android:id="@android:id/progress"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackground">
+        android:layout_below="@id/image_news_top"
+        android:paddingBottom="@dimen/padding_smaller">
 
-        <ImageView
-            android:id="@+id/image_news_top"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+        <TextView
+            android:id="@+id/text_news_headline_top"
+            style="@style/TextViewHead"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            android:lineSpacingExtra="2dp"
+            android:maxLines="@null"
+            android:textSize="20sp" />
 
-        <ProgressBar
-            android:id="@android:id/progress"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerInParent="true"
-            android:visibility="gone" />
+        <TextView
+            android:id="@+id/text_news_date_top"
+            style="@style/TextViewSubHead"
+            android:layout_width="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/text_news_headline_top"
+            android:maxLength="@null" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/image_news_top">
+        <!--<TextView
+            android:id="@+id/text_news_detail_top"
+            style="@style/TextViewDetail"
+            android:layout_below="@id/text_news_date_top" />-->
 
-            <TextView
-                android:id="@+id/text_news_headline_top"
-                style="@style/TextViewHead"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:lineSpacingExtra="2dp"
-                android:maxLines="@null"
-                android:textSize="20sp" />
+        <!--<TextView
+            android:id="@+id/text_news_source_top"
+            style="@style/TextViewSubHead"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/text_news_date_top"
+            android:drawableStart="@drawable/ic_dot_source" />
 
-            <TextView
-                android:id="@+id/text_news_date_top"
-                style="@style/TextViewSubHead"
-                android:layout_width="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@id/text_news_headline_top"
-                android:maxLength="@null" />
+        <TextView
+            android:id="@+id/text_news_author_top"
+            style="@style/TextViewSubHead"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/text_news_date_top"
+            android:layout_toEndOf="@id/text_news_source_top"
+            android:drawableStart="@drawable/ic_dot_author"
+            android:paddingStart="@dimen/padding_smallest"
+            tools:ignore="RtlSymmetry" />-->
 
-            <!--<TextView
-                android:id="@+id/text_news_detail_top"
-                style="@style/TextViewDetail"
-                android:layout_below="@id/text_news_date_top" />-->
-
-            <!--<TextView
-                android:id="@+id/text_news_source_top"
-                style="@style/TextViewSubHead"
-                android:layout_width="wrap_content"
-                android:layout_below="@id/text_news_date_top"
-                android:drawableStart="@drawable/ic_dot_source" />
-
-            <TextView
-                android:id="@+id/text_news_author_top"
-                style="@style/TextViewSubHead"
-                android:layout_width="wrap_content"
-                android:layout_below="@id/text_news_date_top"
-                android:layout_toEndOf="@id/text_news_source_top"
-                android:drawableStart="@drawable/ic_dot_author"
-                android:paddingStart="@dimen/padding_smallest"
-                tools:ignore="RtlSymmetry" />-->
-
-        </RelativeLayout>
     </RelativeLayout>
-</android.support.v7.widget.CardView>
+</RelativeLayout>

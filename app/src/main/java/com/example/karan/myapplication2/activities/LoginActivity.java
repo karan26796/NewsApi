@@ -25,7 +25,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         FirebaseUser mUser = mAuth.getCurrentUser();
 
         if (mUser != null) {
-            startActivity(new Intent(this, HomeActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             finish();
         }
     }

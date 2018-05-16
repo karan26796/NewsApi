@@ -1,10 +1,11 @@
 package com.example.karan.myapplication2.fragment;
 
-import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.karan.myapplication2.R;
-import com.example.karan.myapplication2.adapter.NewsAdapter;
+import com.example.karan.myapplication2.adapter.HeadlineNewsAdapter;
 import com.example.karan.myapplication2.retrofit.news.general.News;
 import com.example.karan.myapplication2.retrofit.news.general.NewsApiClient;
 import com.example.karan.myapplication2.retrofit.news.general.NewsApiInterface;
@@ -35,52 +36,43 @@ import retrofit2.Response;
  * Created by karan on 5/3/2018.
  */
 
-@SuppressLint("ValidFragment")
-public class AllNewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class TopNewsFragment extends android.support.v4.app.Fragment implements SwipeRefreshLayout.OnRefreshListener {
     RecyclerView recyclerView;
-    SwipeRefreshLayout mSwipeRefresh;
     CustomTabActivityHelper mCustomTabActivityHelper;
     CustomTabActivityHelper.CustomTabConnectionCallback mConnectionCallback;
-    String country, category;
+    SwipeRefreshLayout mSwipeRefresh;
+    TabLayout tabLayout;
 
-    public AllNewsFragment() {
-    }
-
-    public AllNewsFragment(String country, String category) {
-        this.country = country;
-        this.category = category;
-    }
-
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the fragment's layout
-        View view = inflater.inflate(R.layout.fragment_all_news, container, false);
-        setupCustomTabHelper();
-        mSwipeRefresh = view.findViewById(R.id.allNewsRefresh);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        recyclerView = view.findViewById(R.id.recycler_news_all);
+        View view = inflater.inflate(R.layout.fragment_top_news,
+                container, false);
+        setupCustomTabHelper();
+        tabLayout = getActivity().findViewById(R.id.main_tab_layout);
+        tabLayout.setVisibility(View.GONE);
+        recyclerView = view.findViewById(R.id.recycler_top_news);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        getNews(country, category, recyclerView);
+        mSwipeRefresh = view.findViewById(R.id.swipeTopNews);
+        getNews(recyclerView);
         mSwipeRefresh.setOnRefreshListener(this);
         return view;
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    private void getNews(String country, String category, final RecyclerView recyclerView) {
+    private void getNews(final RecyclerView recyclerView) {
         mSwipeRefresh.setRefreshing(true);
         NewsApiInterface apiInterface = NewsApiClient.getClient()
                 .create(NewsApiInterface.class);
-        Call<NewsResponse> responseCall = apiInterface.getTopHeadlines(country, category, Constants.NEWS_API_KEY);
+        Call<NewsResponse> responseCall = apiInterface.getTopHeadlines("in", "general",
+                Constants.NEWS_API_KEY);
 
         responseCall.enqueue(new Callback<NewsResponse>() {
             @Override
@@ -91,18 +83,13 @@ public class AllNewsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 } catch (NullPointerException e) {
                     Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                recyclerView.setAdapter(new NewsAdapter(newsList, new NewsAdapter.onNewsClickListener() {
+                recyclerView.setAdapter(new HeadlineNewsAdapter(newsList, new HeadlineNewsAdapter.onNewsClickListener() {
                     @Override
                     public void onNewsClicked(View view, int position, Bundle bundle) {
                         News news = bundle.getParcelable("news");
                         launchCustomTab(news.getUrl());
                     }
-
-                    @Override
-                    public void onBookmarkClicked(View view, int position, Bundle bundle) {
-                        Toast.makeText(getContext(), "Added", Toast.LENGTH_SHORT).show();
-                    }
-                }, newsList.size()));
+                }));
                 mSwipeRefresh.setRefreshing(false);
             }
 
@@ -126,6 +113,7 @@ public class AllNewsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onRefresh() {
-        getNews(country, category, recyclerView);
+        getNews(recyclerView);
     }
+
 }
