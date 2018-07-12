@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.karan.myapplication2.R;
 import com.example.karan.myapplication2.adapter.HomeViewPagerAdapter;
@@ -24,7 +23,7 @@ public class DummyFragment extends Fragment {
     String text;
     TabLayout tabLayout;
     ViewPager viewPager;
-    String fragmentArray[] = {"Bookmarks", "History"};
+    String fragmentArray[] = {"Bookmarks", "History", "ABC News"};
 
     public DummyFragment(String text) {
         this.text = text;
@@ -51,9 +50,10 @@ public class DummyFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(getActivity()
                 .getSupportFragmentManager());
-        for (int i = 0; i < fragmentArray.length; i++) {
-            adapter.addFragment(new FavoritesFragment(fragmentArray[i]), fragmentArray[i]);
-        }
+
+        adapter.addFragment(new FavoritesFragment(fragmentArray[0]), fragmentArray[0]);
+        adapter.addFragment(new FavoritesFragment(fragmentArray[1]), fragmentArray[1]);
+        adapter.addFragment(new SourcesFragment(), fragmentArray[2]);
         viewPager.setAdapter(adapter);
     }
 }

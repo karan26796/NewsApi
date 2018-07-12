@@ -8,15 +8,17 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.example.karan.myapplication2.R;
 import com.example.karan.myapplication2.adapter.HeadlineNewsAdapter;
+import com.example.karan.myapplication2.adapter.TopSourcesAdapter;
 import com.example.karan.myapplication2.retrofit.news.general.News;
 import com.example.karan.myapplication2.retrofit.news.general.NewsApiClient;
 import com.example.karan.myapplication2.retrofit.news.general.NewsApiInterface;
@@ -37,7 +39,7 @@ import retrofit2.Response;
  */
 
 public class TopNewsFragment extends android.support.v4.app.Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    RecyclerView recyclerView;
+    ShimmerRecyclerView topNewsRecycler, topSourceRecycler;
     CustomTabActivityHelper mCustomTabActivityHelper;
     CustomTabActivityHelper.CustomTabConnectionCallback mConnectionCallback;
     SwipeRefreshLayout mSwipeRefresh;
@@ -50,13 +52,31 @@ public class TopNewsFragment extends android.support.v4.app.Fragment implements 
         View view = inflater.inflate(R.layout.fragment_top_news,
                 container, false);
         setupCustomTabHelper();
+        //NestedScrollView nestedScrollView = view.findViewById(R.id.nested);
+        //nestedScrollView.setNestedScrollingEnabled(true);
+
         tabLayout = getActivity().findViewById(R.id.main_tab_layout);
         tabLayout.setVisibility(View.GONE);
-        recyclerView = view.findViewById(R.id.recycler_top_news);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        topSourceRecycler = view.findViewById(R.id.recycler_top_sources);
+        topSourceRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4, GridLayoutManager.VERTICAL, false) {
+
+            @Override
+
+            public boolean canScrollVertically() {
+
+                return false;
+
+            }
+
+        });
+        topSourceRecycler.setAdapter(new TopSourcesAdapter());
+
+        topNewsRecycler = view.findViewById(R.id.recycler_top_news);
+        topNewsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        topNewsRecycler.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mSwipeRefresh = view.findViewById(R.id.swipeTopNews);
-        getNews(recyclerView);
+        mSwipeRefresh.setNestedScrollingEnabled(false);
+        getNews(topNewsRecycler);
         mSwipeRefresh.setOnRefreshListener(this);
         return view;
     }
@@ -67,8 +87,9 @@ public class TopNewsFragment extends android.support.v4.app.Fragment implements 
         super.onCreate(savedInstanceState);
     }
 
-    private void getNews(final RecyclerView recyclerView) {
+    private void getNews(final ShimmerRecyclerView recyclerView) {
         mSwipeRefresh.setRefreshing(true);
+        recyclerView.showShimmerAdapter();
         NewsApiInterface apiInterface = NewsApiClient.getClient()
                 .create(NewsApiInterface.class);
         Call<NewsResponse> responseCall = apiInterface.getTopHeadlines("in", "general",
@@ -91,11 +112,13 @@ public class TopNewsFragment extends android.support.v4.app.Fragment implements 
                     }
                 }));
                 mSwipeRefresh.setRefreshing(false);
+                recyclerView.hideShimmerAdapter();
             }
 
             @Override
             public void onFailure(Call<NewsResponse> call, Throwable t) {
                 mSwipeRefresh.setRefreshing(false);
+                recyclerView.hideShimmerAdapter();
             }
         });
     }
@@ -113,7 +136,7 @@ public class TopNewsFragment extends android.support.v4.app.Fragment implements 
 
     @Override
     public void onRefresh() {
-        getNews(recyclerView);
+        getNews(topNewsRecycler);
     }
 
 }

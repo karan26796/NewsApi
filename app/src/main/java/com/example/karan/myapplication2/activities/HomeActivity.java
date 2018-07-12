@@ -197,11 +197,5 @@ public class HomeActivity extends BaseActivity
         for (int i = 0; i < optionsTitle.length; i++) {
             mOptionsList.add(new Options(optionsTitle[i], optionsDrawable[i]));
         }
-        recyclerView.setAdapter(new OptionsAdapter(mOptionsList, new OptionsAdapter.optionsClickListener() {
-            @Override
-            public void onOptionsClicked(View view, int position) {
-
-            }
-        }));
     }
 }

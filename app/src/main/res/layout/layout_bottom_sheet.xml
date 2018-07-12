@@ -4,12 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bottom_sheet_bg"
-    android:orientation="vertical"
-    android:paddingBottom="?actionBarSize"
-    android:paddingStart="@dimen/padding_smaller"
-    android:paddingTop="@dimen/padding_small"
+    android:layout_height="match_parent"
+    android:background="#56000000"
     app:behavior_hideable="true"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
     app:layout_collapseMode="pin"
@@ -18,5 +14,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/options_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?attr/bottom_nav_color"
+        android:paddingBottom="?actionBarSize"
+        android:paddingStart="@dimen/padding_smaller"
+        android:paddingTop="@dimen/padding_small" />
 </LinearLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="@dimen/margin_smaller"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
+        android:background="@drawable/demo_bg"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_smaller">
+
+        <TextView
+            android:id="@+id/text_news_headline_top"
+            style="@style/TextViewHead"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/demo_bg"
+            android:lineSpacingExtra="2dp"
+            android:maxLines="@null"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/text_news_date_top"
+            style="@style/TextViewSubHead"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/text_news_headline_top"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@drawable/demo_bg"
+            android:maxLength="@null" />
+
+    </RelativeLayout>
+</LinearLayout>

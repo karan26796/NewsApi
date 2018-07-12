@@ -124,11 +124,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
 
         }
 
-        public void bindData(final Context context, final News news) {
-            mHead.setText(news.getTitle());
-            mSource.setText(news.getSource().getName());
-        }
-
         @Override
         public void onClick(View v) {
             Bundle bundle = new Bundle();

@@ -15,4 +15,7 @@ public interface NewsApiInterface {
                                        @Query("category") String category,
                                        @Query("apiKey") String apiKey);
 
+    @GET("top-headlines")
+    Call<NewsResponse> getNewsSource(@Query("sources") String sources,
+                                     @Query("apiKey") String apiKey);
 }

@@ -28,7 +28,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionsV
     }
 
     public interface optionsClickListener {
-        void onOptionsClicked(View view, int position);
+        void onOptionsClicked(View view, int position, OptionsViewHolder viewHolder);
     }
 
     @NonNull
@@ -63,8 +63,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionsV
 
         @Override
         public void onClick(View v) {
-            mListener.onOptionsClicked(v, getAdapterPosition());
-            Toast.makeText(v.getContext(), "Position" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+            mListener.onOptionsClicked(v, getAdapterPosition(), this);
         }
     }
 }

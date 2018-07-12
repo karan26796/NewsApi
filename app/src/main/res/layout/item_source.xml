@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text_source"
+    style="@style/TextViewHead"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_smaller"
+    android:background="@drawable/sources_bg"
+    android:padding="@dimen/padding_smaller"
+    android:textAlignment="center" />

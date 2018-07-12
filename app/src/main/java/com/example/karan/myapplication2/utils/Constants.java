@@ -12,4 +12,5 @@ public class Constants {
     public static final String NEWS_BASE_URL = "http://newsapi.org/v2/";
 
     public static final String USERS_KEY = "users";
+    public static final String KEY_APP_THEME = "app_theme";
 }

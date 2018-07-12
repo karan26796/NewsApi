@@ -48,8 +48,7 @@ public class HeadlineNewsAdapter extends RecyclerView.Adapter<HeadlineNewsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final NewsHolder holder, int position) {
-        holder.mHead.setText(String.valueOf(position + 1).concat(". ")
-                .concat(mNewsList.get(position).getTitle()));
+        holder.mHead.setText(mNewsList.get(position).getTitle());
         //holder.mAuthor.setText(mNewsList.get(position).getAuthor());
         //holder.mDetail.setText(mNewsList.get(position).getDescription());
         //holder.mSource.setText(mNewsList.get(position).getSource().getName());

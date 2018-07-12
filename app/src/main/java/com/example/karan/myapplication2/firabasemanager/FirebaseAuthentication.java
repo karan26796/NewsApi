@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.example.karan.myapplication2.R;
 import com.example.karan.myapplication2.activities.LoginActivity;
-import com.example.karan.myapplication2.activities.MainActivity;
+import com.example.karan.myapplication2.activities.SourcesActivity;
 import com.example.karan.myapplication2.retrofit.usr.User;
 import com.example.karan.myapplication2.utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,7 +36,7 @@ public class FirebaseAuthentication {
     }
 
     /*If a new user wants to log in to the app, they need to create an account which requires an email and a
-    * password which is handled by this method*/
+     * password which is handled by this method*/
     public void newUser(final String email, final String password, final ProgressDialog progressDialog) {
         //checking if email and passwords are empty
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
@@ -71,7 +71,7 @@ public class FirebaseAuthentication {
                                     // dismiss progress dialog
                                     progressDialog.dismiss();
                                     // launch HomeScreenActivity when user registration is complete
-                                    Intent mainActivity = new Intent(mContext, MainActivity.class);
+                                    Intent mainActivity = new Intent(mContext, SourcesActivity.class);
                                     mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     mContext.startActivity(mainActivity);
                                     // finish current activity
@@ -98,7 +98,7 @@ public class FirebaseAuthentication {
                     // dismiss progress dialog
                     mProgressDialog.dismiss();
                     // launch HomeScreenActivity when user registration is complete
-                    Intent mainActivity = new Intent(mContext, MainActivity.class);
+                    Intent mainActivity = new Intent(mContext, SourcesActivity.class);
                     mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     mContext.startActivity(mainActivity);
                     // finish current activity

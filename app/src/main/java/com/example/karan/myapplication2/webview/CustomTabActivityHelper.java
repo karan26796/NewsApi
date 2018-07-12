@@ -116,9 +116,8 @@ public class CustomTabActivityHelper implements ServiceConnectionCallback {
         if (mCustomTabsClient == null) return false;
 
         CustomTabsSession session = getSession();
-        if (session == null) return false;
+        return session != null && session.mayLaunchUrl(uri, extras, otherLikelyBundles);
 
-        return session.mayLaunchUrl(uri, extras, otherLikelyBundles);
     }
 
     @Override

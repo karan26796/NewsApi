@@ -298,7 +298,12 @@
     <color name="md_blue_grey_700">#455A64</color>
     <color name="md_blue_grey_800">#37474F</color>
     <color name="md_blue_grey_900">#263238</color>
-    <color name="background_material_dark">#212121</color>
-    <color name="accent_material_light">#304ffe</color>
 
+    <color name="head_light">#f2212121</color>
+    <color name="detail_light">#a0212121</color>
+    <color name="subhead_light">#c8212121</color>
+
+    <color name="head_dark">#f2f2f2f2</color>
+    <color name="detail_dark">#a0f2f2f2</color>
+    <color name="subhead_dark">#c8f2f2f2</color>
 </resources>

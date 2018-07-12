@@ -8,6 +8,11 @@
         <item>This is kit</item>
     </string-array>
 
+    <string-array name="theme">
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+
     <string-array name="subhead">
         <item>This is it.This is it.This is it.This is it</item>
         <item>This is that.This is that.This is that.This is that</item>

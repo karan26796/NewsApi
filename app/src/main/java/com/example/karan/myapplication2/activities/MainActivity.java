@@ -1,6 +1,12 @@
 package com.example.karan.myapplication2.activities;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,25 +18,32 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.karan.myapplication2.R;
+import com.example.karan.myapplication2.SharedPrefManager;
 import com.example.karan.myapplication2.adapter.OptionsAdapter;
+import com.example.karan.myapplication2.background.MyFirebaseInstanceIdService;
+import com.example.karan.myapplication2.firabasemanager.FirebaseAuthentication;
 import com.example.karan.myapplication2.fragment.DummyFragment;
 import com.example.karan.myapplication2.fragment.NewsAllFragment;
 import com.example.karan.myapplication2.fragment.SearchFragment;
 import com.example.karan.myapplication2.fragment.TopNewsFragment;
 import com.example.karan.myapplication2.model.Options;
 import com.example.karan.myapplication2.utils.BottomNavigationViewHelper;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity implements FragmentManager.OnBackStackChangedListener
-        , OptionsAdapter.optionsClickListener {
+        , OptionsAdapter.optionsClickListener, View.OnClickListener {
+    ArrayList<Options> mOptionsList;
+    BroadcastReceiver broadcastReceiver;
+    FirebaseAuthentication firebaseAuthentication;
     public TabLayout tabLayout;
     LinearLayout layoutBottomSheet;
     BottomSheetBehavior sheetBehavior;
-    ArrayList<Options> mOptionsList;
-
+    FirebaseAuth mAuth;
     RecyclerView recyclerView;
 
     @Override
@@ -41,17 +54,35 @@ public class MainActivity extends BaseActivity implements FragmentManager.OnBack
         if (savedInstanceState == null) {
             inflateFragment(new TopNewsFragment());
         }
-        tabLayout = findViewById(R.id.main_tab_layout);
 
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                if (SharedPrefManager.getInstance(context).getToken() != null)
+                    Toast.makeText(context, SharedPrefManager.getInstance(context).getToken(),
+                            Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(context, "Token not found", Toast.LENGTH_SHORT).show();
+            }
+        };
+        registerReceiver(broadcastReceiver, new IntentFilter(MyFirebaseInstanceIdService
+                .TOKEN_BROADCAST));
+        mAuth = FirebaseAuth.getInstance();
+        firebaseAuthentication = new FirebaseAuthentication(this);
+
+        tabLayout = findViewById(R.id.main_tab_layout);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         BottomNavigationViewHelper.disableShiftMode(navigation);
 
         layoutBottomSheet = findViewById(R.id.bottom_sheet_options);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+
         recyclerView = layoutBottomSheet.findViewById(R.id.options_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         setRecyclerView();
+        layoutBottomSheet.setOnClickListener(this);
 
         //sets the behaviour of linear layout to a bottom sheet
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -156,16 +187,55 @@ public class MainActivity extends BaseActivity implements FragmentManager.OnBack
 
     private void setRecyclerView() {
         mOptionsList = new ArrayList<>();
-        String optionsTitle[] = {"Bookmark", "History", "Exit", "Enter"};
-        int optionsDrawable[] = {R.drawable.ic_bookmark, R.drawable.ic_info,
-                R.drawable.ic_close, R.drawable.ic_menu_gallery};
+
+        String optionsTitle[] = {mAuth.getCurrentUser().getEmail(),
+                "Logout", "Settings", "Enter"};
+        int optionsDrawable[] = {R.drawable.ic_account_circle, R.drawable.ic_logout,
+                R.drawable.ic_settings, R.drawable.ic_menu_gallery};
+
         for (int i = 0; i < optionsTitle.length; i++) {
             mOptionsList.add(new Options(optionsTitle[i], optionsDrawable[i]));
         }
+
         recyclerView.setAdapter(new OptionsAdapter(mOptionsList, this));
     }
 
     @Override
-    public void onOptionsClicked(View view, int position) {
+    public void onOptionsClicked(View view, int position, OptionsAdapter.OptionsViewHolder viewHolder) {
+        switch (position) {
+            case 0:
+                if (SharedPrefManager.getInstance(this).getToken() != null)
+                    Toast.makeText(this, SharedPrefManager.getInstance(this).getToken(),
+                            Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(this, "Token not found", Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setTitle("Sure to Logout?");
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        firebaseAuthentication.logoutUser();
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).create();
+                alertDialog.show();
+                break;
+            case 2:
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            case 3:
+                startActivity(new Intent(this, SourcesActivity.class));
+                break;
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 }

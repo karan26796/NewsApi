@@ -9,7 +9,10 @@
         android:id="@+id/image_news_top"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/margin_smaller"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 

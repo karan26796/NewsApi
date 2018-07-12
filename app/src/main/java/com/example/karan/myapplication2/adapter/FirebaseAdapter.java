@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ public class FirebaseAdapter extends FirebaseRecyclerAdapter<News, FirebaseAdapt
     }
 
     public interface onNewsHistoryClickListener {
-        void onNewsClicked(View view, int position, Bundle bundle);
+        void onNewsClicked(FirebaseAdapter.ViewHolder viewHolder, int position, Bundle bundle);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class FirebaseAdapter extends FirebaseRecyclerAdapter<News, FirebaseAdapt
     protected void populateViewHolder(final ViewHolder viewHolder, News model, int position) {
         viewHolder.mHead.setText(mNewsList.get(position).getTitle());
         viewHolder.mDetail.setText(mNewsList.get(position).getDescription());
-        viewHolder.mDate.setText(mNewsList.get(position).getDate().concat(" |")
+        viewHolder.mDate.setText(mNewsList.get(position).getDate().concat(" | ")
                 .concat(mNewsList.get(position).getSource().getName()));
         if (mNewsList.get(position).getAuthor() != null)
             viewHolder.mAuthor.setText(mNewsList.get(position).getAuthor());
@@ -77,6 +78,7 @@ public class FirebaseAdapter extends FirebaseRecyclerAdapter<News, FirebaseAdapt
         TextView mHead, mAuthor, mDetail, mDate, mSource;
         ImageView mNewsImage;
         ProgressBar mProgress;
+        ImageButton bookmarkBtn;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -86,6 +88,8 @@ public class FirebaseAdapter extends FirebaseRecyclerAdapter<News, FirebaseAdapt
             mAuthor = itemView.findViewById(R.id.text_news_author);
             mDate = itemView.findViewById(R.id.text_news_date);
             mDetail = itemView.findViewById(R.id.text_news_detail);
+            bookmarkBtn = itemView.findViewById(R.id.bookmark_btn);
+            bookmarkBtn.setImageResource(R.drawable.ic_bookmark_filled);
             //mSource = itemView.findViewById(R.id.text_news_source);
 
             mNewsImage = itemView.findViewById(R.id.image_news);
@@ -95,10 +99,10 @@ public class FirebaseAdapter extends FirebaseRecyclerAdapter<News, FirebaseAdapt
         @Override
         public void onClick(View v) {
             Bundle bundle = new Bundle();
-            mListener.onNewsClicked(v, getAdapterPosition(), bundle);
+            mListener.onNewsClicked(this, getAdapterPosition(), bundle);
             bundle.putParcelable("news", mNewsList.get(getAdapterPosition()));
             try {
-                mListener.onNewsClicked(v, getAdapterPosition(), bundle);
+                mListener.onNewsClicked(this, getAdapterPosition(), bundle);
             } catch (NullPointerException e) {
                 Log.e("History News", e.getMessage());
             }

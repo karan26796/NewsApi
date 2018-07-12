@@ -6,8 +6,27 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_top_news"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+            android:id="@+id/recycler_top_sources"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_smaller"
+            app:shimmer_demo_child_count="5"
+            app:shimmer_demo_layout="@layout/item_top_sources"
+            app:shimmer_demo_shimmer_color="?attr/icon_color" />
+
+        <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+            android:id="@+id/recycler_top_news"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recycler_top_sources"
+            app:shimmer_demo_child_count="3"
+            app:shimmer_demo_layout="@layout/item_news_demo"
+            app:shimmer_demo_layout_manager_type="linear_horizontal"
+            app:shimmer_demo_shimmer_color="?attr/icon_color" />
+    </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

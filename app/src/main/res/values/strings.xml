@@ -18,4 +18,8 @@
     <string name="title_all_news">All News</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_search">Search</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_dialog">Select App Theme</string>
+    <string name="theme_key">app_theme</string>
 </resources>

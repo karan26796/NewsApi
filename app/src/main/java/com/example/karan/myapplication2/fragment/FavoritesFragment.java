@@ -85,7 +85,7 @@ public class FavoritesFragment extends Fragment implements FirebaseAdapter.onNew
     }
 
     @Override
-    public void onNewsClicked(View view, int position, Bundle bundle) {
+    public void onNewsClicked(FirebaseAdapter.ViewHolder viewHolder, int position, Bundle bundle) {
         try {
             News news = bundle.getParcelable("news");
             launchCustomTab(news.getUrl());

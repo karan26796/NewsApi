@@ -1,6 +1,6 @@
 package com.example.karan.myapplication2.adapter;
 
-import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,10 +15,16 @@ import com.squareup.picasso.Picasso;
  * Created by karan on 5/14/2018.
  */
 
-public class SearchViewHolder extends RecyclerView.ViewHolder {
+public class SearchViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private TextView mHead, mAuthor, mDetail, mDate, mSource;
     private ImageView mNewsImage;
     private ProgressBar mProgress;
+    News news;
+    public onSearchItemClickListener mListener;
+
+    public interface onSearchItemClickListener {
+        void onItemClicked(View view, int position, Bundle bundle);
+    }
 
     public SearchViewHolder(View itemView) {
         super(itemView);
@@ -33,13 +39,24 @@ public class SearchViewHolder extends RecyclerView.ViewHolder {
         mNewsImage = itemView.findViewById(R.id.image_news);
     }
 
-    public void bindData(final Context context, final News user) {
-        mHead.setText(user.title);
-        mDetail.setText(user.description);
+    public void bindData(final News news) {
+        this.news = news;
+        mHead.setText(news.title);
+        mDetail.setText(news.description);
+        mAuthor.setText(news.author);
+        mDate.setText(news.date.concat(" | ").concat(news.source.name));
         Picasso.get()
-                .load(user.urlToImage)
-                .placeholder(R.drawable.author_dot)
+                .load(news.urlToImage)
+                .placeholder(R.drawable.ic_landscape)
                 .into(mNewsImage);
+        itemView.setOnClickListener(this);
+    }
 
+    @Override
+    public void onClick(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putString("url", news.url);
+//        mListener.onItemClicked(v, getAdapterPosition(), bundle);
+        //  Toast.makeText(itemView.getContext(), getAdapterPosition(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -13,17 +13,17 @@ public class News implements Parcelable {
     @SerializedName("source")
     public Source source;
     @SerializedName("author")
-    private String author;
+    public String author;
     @SerializedName("title")
     public String title;
     @SerializedName("description")
     public String description;
     @SerializedName("url")
-    private String url;
+    public String url;
     @SerializedName("urlToImage")
     public String urlToImage;
     @SerializedName("publishedAt")
-    private String date;
+    public String date;
 
     protected News(Parcel in) {
         author = in.readString();
@@ -122,9 +122,9 @@ public class News implements Parcelable {
 
     public static class Source implements Parcelable {
         @SerializedName("name")
-        String name;
+        public String name;
         @SerializedName("id")
-        String id;
+        public String id;
 
         public Source() {
         }

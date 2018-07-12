@@ -8,8 +8,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_smaller"
-        app:passwordToggleEnabled="true">
+        android:layout_margin="@dimen/margin_smaller">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/input_text_email_sign_up"
@@ -30,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:inputType="textPassword|numberPassword"
+            android:inputType="textPassword"
             android:typeface="monospace" />
     </android.support.design.widget.TextInputLayout>
 
@@ -38,7 +37,6 @@
         android:id="@+id/sign_up_btn"
         style="@style/Button"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/btn_selector_green"
         android:text="Sign Up"
         android:textColor="@android:color/white" />
 </LinearLayout>
