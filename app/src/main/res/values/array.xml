@@ -20,7 +20,12 @@
         <item>This is fit.This is fit.This is fit.This is fit</item>
         <item>This is kit.This is kit.This is kit.This is kit</item>
     </string-array>
-
+    <integer-array name="drawableArray">
+        <item>@drawable/ic_account_circle</item>
+        <item>@drawable/ic_logout</item>
+        <item>@drawable/ic_settings</item>
+        <item>@drawable/ic_menu_gallery</item>
+    </integer-array>
     <string-array name="detail">
         <item>This is it.This is it.This is it.This is it.This is it</item>
         <item>This is that.This is that.This is that.This is that.This is that</item>

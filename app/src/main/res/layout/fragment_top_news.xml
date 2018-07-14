@@ -15,9 +15,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_smaller"
+            android:visibility="gone"
             app:shimmer_demo_child_count="5"
             app:shimmer_demo_layout="@layout/item_top_sources"
-            app:shimmer_demo_shimmer_color="?attr/icon_color" />
+            app:shimmer_demo_shimmer_color="@color/md_grey_200" />
 
         <com.cooltechworks.views.shimmer.ShimmerRecyclerView
             android:id="@+id/recycler_top_news"
@@ -26,7 +27,7 @@
             android:layout_below="@id/recycler_top_sources"
             app:shimmer_demo_child_count="3"
             app:shimmer_demo_layout="@layout/item_news_demo"
-            app:shimmer_demo_layout_manager_type="linear_horizontal"
-            app:shimmer_demo_shimmer_color="?attr/icon_color" />
+            app:shimmer_demo_layout_manager_type="linear_vertical"
+            app:shimmer_demo_shimmer_color="@color/md_grey_200" />
     </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

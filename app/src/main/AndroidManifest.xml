@@ -13,47 +13,40 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MovieDetailActivity" />
-        <activity android:name=".activities.SecondActivity" />
-        <activity
-            android:name=".activities.HomeActivity"
-            android:label="@string/title_activity_home" />
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name=".news.activities.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.WebViewActivity" />
+        <activity android:name=".news.activities.WebViewActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".activities.NewsDetailActivity" />
-        <activity android:name=".activities.AllNewsActivity" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".news.activities.home.MainActivity"
             android:label="@string/title_activity_main">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".activities.SettingsActivity" />
-        <activity android:name=".activities.SourcesActivity" />
+        <activity android:name=".news.activities.login.SourcesActivity" />
 
         <service android:name=".background.NotificationsService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".background.MyFirebaseInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
+        <activity android:name=".news.activities.ViewPagerActivity"></activity>
     </application>
 
 </manifest>

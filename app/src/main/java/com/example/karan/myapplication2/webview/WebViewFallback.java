@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.example.karan.myapplication2.activities.WebViewActivity;
+import com.example.karan.myapplication2.news.activities.WebViewActivity;
 
 /**
  * Created by karan on 4/1/2018.

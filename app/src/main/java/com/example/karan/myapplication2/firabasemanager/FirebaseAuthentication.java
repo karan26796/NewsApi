@@ -9,9 +9,9 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.example.karan.myapplication2.R;
-import com.example.karan.myapplication2.activities.LoginActivity;
-import com.example.karan.myapplication2.activities.SourcesActivity;
-import com.example.karan.myapplication2.retrofit.usr.User;
+import com.example.karan.myapplication2.news.activities.login.SourcesActivity;
+import com.example.karan.myapplication2.model.User;
+import com.example.karan.myapplication2.news.activities.login.LoginActivity;
 import com.example.karan.myapplication2.utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

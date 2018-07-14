@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.karan.myapplication2.activities.LoginActivity"
+    tools:context="com.example.karan.myapplication2.news.activities.login.LoginActivity"
     tools:ignore="HardcodedText">
 
     <android.support.design.widget.AppBarLayout
@@ -20,8 +20,8 @@
             android:id="@+id/tab_layout_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabMode="scrollable" />
+            android:layout_gravity="center_horizontal"
+            app:tabMode="fixed" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
