@@ -6,10 +6,10 @@
     <color name="primary">#fff</color>
     <color name="primaryLight">#757575</color>
     <color name="primaryDark">#9e9e9e</color>
-    <color name="secondary">#2979ff</color>
+    <color name="secondary">#AA00FF</color>
     <color name="secondaryLight">#6dffe7</color>
     <color name="secondaryDark">#00bfa5</color>
-    <color name="textColorPrimary">#212121</color>
+    <color name="textColorPrimary">#000000</color>
     <color name="textColorSecondary">#bd212121</color>
     <color name="textColorTertiary">#7a212121</color>
     <!--reds-->

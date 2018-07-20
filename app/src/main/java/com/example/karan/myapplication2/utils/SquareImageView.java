@@ -9,6 +9,7 @@ import android.util.AttributeSet;
  */
 
 public class SquareImageView extends AppCompatImageView {
+    int i;
 
     public SquareImageView(Context context) {
         super(context);

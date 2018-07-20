@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground">
+
+    <com.example.karan.myapplication2.utils.SquareImageView
+        android:id="@+id/image_news_top"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <ProgressBar
+        android:id="@android:id/progress"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toEndOf="@+id/image_news_top"
+        app:layout_constraintStart_toEndOf="@+id/barrier4"
+        app:layout_constraintTop_toTopOf="@id/image_news_top" />
+
+    <TextView
+        android:id="@+id/text_news_headline_top"
+        style="@style/TextViewHead"
+        android:layout_width="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:lineSpacingExtra="2dp"
+        android:maxLines="@null"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toStartOf="@+id/barrier4"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/text_news_date_top" />
+
+    <TextView
+        android:id="@+id/text_news_date_top"
+        style="@style/TextViewSubHead"
+        android:layout_width="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/text_news_headline_top"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:maxLength="@null"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/text_news_headline_top"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/bookmark_btn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/btn_ripple"
+        android:padding="@dimen/padding_smaller"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/barrier4"
+        app:layout_constraintTop_toBottomOf="@+id/text_news_headline_top"
+        app:srcCompat="@drawable/ic_bookmark" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="image_news_top" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="20dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+    <!--<TextView
+        android:id="@+id/text_news_detail_top"
+        style="@style/TextViewDetail"
+        android:layout_below="@id/text_news_date_top" />-->
+
+    <!--<TextView
+        android:id="@+id/text_news_source_top"
+        style="@style/TextViewSubHead"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/text_news_date_top"
+        android:drawableStart="@drawable/ic_dot_source" />
+
+    <TextView
+        android:id="@+id/text_news_author_top"
+        style="@style/TextViewSubHead"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/text_news_date_top"
+        android:layout_toEndOf="@id/text_news_source_top"
+        android:drawableStart="@drawable/ic_dot_author"
+        android:paddingStart="@dimen/padding_smallest"
+        tools:ignore="RtlSymmetry" />-->
+
+</android.support.constraint.ConstraintLayout>

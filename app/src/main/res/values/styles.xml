@@ -12,6 +12,7 @@
         <item name="colorPrimary" tools:ignore="NewApi">@color/primary</item>
         <item name="android:fontFamily">@font/google_sans_medium</item>
         <item name="colorPrimaryDark" tools:ignore="NewApi">@color/primaryDark</item>
+        <item name="android:toolbarStyle" tools:ignore="NewApi">@style/ToolbarStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -34,41 +35,28 @@
         <item name="android:textColor">@color/textColorPrimary</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
-        <item name="android:paddingTop">@dimen/padding_smallest</item>
-        <item name="android:paddingBottom">@dimen/padding_smallest</item>
-        <item name="android:paddingEnd">@dimen/padding_small</item>
         <item name="android:fontFamily">@font/google_sans_medium</item>
-        <item name="android:paddingStart">@dimen/padding_small</item>
     </style>
 
     <style name="TextViewSubHead">
         <item name="android:textColor">@color/textColorSecondary</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:paddingStart">@dimen/padding_small</item>
-        <item name="android:paddingEnd">@dimen/padding_small</item>
-        <item name="android:drawablePadding">@dimen/padding_smallest</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:maxLength">15</item>
         <item name="android:fontFamily">@font/google_sans_medium</item>
-        <item name="android:paddingTop">@dimen/padding_smallest</item>
-        <item name="android:paddingBottom">@dimen/padding_smallest</item>
     </style>
 
     <style name="TextViewDetail">
         <item name="android:textColor">@color/textColorTertiary</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:fontFamily">@font/google_sans_regular</item>
-        <item name="android:paddingEnd">@dimen/padding_small</item>
-        <item name="android:paddingStart">@dimen/padding_small</item>
-        <item name="android:paddingBottom">@dimen/padding_smallest</item>
+        <item name="android:fontFamily">@font/google_sans_medium</item>
     </style>
 
     <style name="Theme.AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar" />
@@ -85,7 +73,7 @@
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">@color/secondary</item>
-        <item name="android:theme">@style/AppTheme</item>
+        <item name="android:fontFamily">@font/merriweather_black_italic</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="titleTextAppearance">@style/TextAppearance.Toolbar</item>
     </style>
@@ -93,6 +81,16 @@
     <style name="TextAppearance.Toolbar" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/md_white_1000</item>
+    </style>
+
+    <style name="Theme.AppCompat.Dialog.">
+        <item name="android:buttonStyle">@style/Widget.MaterialComponents.Button.TextButton.Dialog
+        </item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="Widget.BottomNavigationView" parent="TextAppearance.MaterialComponents.BottomNavigationView.Colored">
+        <item name="fontFamily">@font/google_sans_regular</item>
     </style>
 
 </resources>

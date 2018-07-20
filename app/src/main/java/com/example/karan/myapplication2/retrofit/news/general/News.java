@@ -24,6 +24,7 @@ public class News implements Parcelable {
     public String urlToImage;
     @SerializedName("publishedAt")
     public String date;
+    public int isBookmarked = 0;
 
     protected News(Parcel in) {
         author = in.readString();
@@ -32,6 +33,7 @@ public class News implements Parcelable {
         url = in.readString();
         urlToImage = in.readString();
         date = in.readString();
+        isBookmarked = in.readInt();
     }
 
     public News() {
@@ -105,6 +107,14 @@ public class News implements Parcelable {
         this.date = date;
     }
 
+    public int getIsBookmarked() {
+        return isBookmarked;
+    }
+
+    public void setIsBookmarked(int isBookmarked) {
+        this.isBookmarked = isBookmarked;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -118,6 +128,7 @@ public class News implements Parcelable {
         dest.writeString(url);
         dest.writeString(urlToImage);
         dest.writeString(date);
+        dest.writeInt(isBookmarked);
     }
 
     public static class Source implements Parcelable {

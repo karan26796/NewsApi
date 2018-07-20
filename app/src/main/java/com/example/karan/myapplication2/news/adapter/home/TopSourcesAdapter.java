@@ -9,14 +9,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.karan.myapplication2.R;
+import com.example.karan.myapplication2.model.TopSources;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class TopSourcesAdapter extends RecyclerView.Adapter<TopSourcesAdapter.SourcesViewHolder> {
 
-    public TopSourcesAdapter() {
+    private OnSourceClicked mListener;
+    ArrayList<TopSources> mList;
+    TopSources topSources = null;
+
+    public interface OnSourceClicked {
+        void onItemClilcked(int position);
+    }
+
+    public TopSourcesAdapter(OnSourceClicked mListener, ArrayList<TopSources> mList) {
+        this.mListener = mListener;
+        this.mList = mList;
     }
 
     @NonNull
@@ -29,9 +44,12 @@ public class TopSourcesAdapter extends RecyclerView.Adapter<TopSourcesAdapter.So
 
     @Override
     public void onBindViewHolder(@NonNull final SourcesViewHolder holder, int position) {
-        holder.sourceText.setText("News Source");
+        if (topSources != null && topSources.equals(mList.get(position)))
+            holder.sourceText.setText(mList.get(position).getName());
+        else holder.sourceText.setText("This");
+
         Picasso.get()
-                .load(R.drawable.ic_account_circle)
+                .load(mList.get(position).getDrawable())
                 .transform(new CropCircleTransformation())
                 .into(holder.sourceImage, new Callback() {
                     @Override
@@ -51,16 +69,26 @@ public class TopSourcesAdapter extends RecyclerView.Adapter<TopSourcesAdapter.So
         return 4;
     }
 
-    public class SourcesViewHolder extends RecyclerView.ViewHolder {
+    public class SourcesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.text_top_source)
         TextView sourceText;
+        @BindView(R.id.image_top_source)
         ImageView sourceImage;
 
         public SourcesViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            sourceText = itemView.findViewById(R.id.text_top_source);
-            sourceImage = itemView.findViewById(R.id.image_top_source);
+            ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View view) {
+            if (topSources == null) {
+                topSources = mList.get(getAdapterPosition());
+            } else
+                topSources = mList.get(getAdapterPosition());
+
+            mListener.onItemClilcked(getAdapterPosition());
+        }
     }
 }

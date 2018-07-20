@@ -10,9 +10,12 @@
     <dimen name="padding_smaller">5dp</dimen>
     <dimen name="padding_smallest">3dp</dimen>
 
+    <dimen name="image_large">200dp</dimen>
+
     <dimen name="margin_small">10dp</dimen>
     <dimen name="margin_smaller">5dp</dimen>
     <dimen name="margin_smallest">3dp</dimen>
     <dimen name="icon_dimen">10dp</dimen>
+    <dimen name="button_radius_large">20dp</dimen>
 
 </resources>

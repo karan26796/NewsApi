@@ -15,13 +15,20 @@ import android.widget.EditText;
 import com.example.karan.myapplication2.R;
 import com.example.karan.myapplication2.firabasemanager.FirebaseAuthentication;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by karan on 5/14/2018.
  */
 
 public class SignUpFragment extends Fragment implements View.OnClickListener {
 
-    EditText mInputEmail, mInputPassword;
+    @BindView(R.id.input_text_email_sign_up)
+    EditText mInputEmail;
+    @BindView(R.id.input_text_password_sign_up)
+    EditText mInputPassword;
+    @BindView(R.id.sign_up_btn)
     Button mLoginButton;
     ProgressDialog progressDialog;
 
@@ -36,9 +43,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        mInputEmail = view.findViewById(R.id.input_text_email_sign_up);
-        mInputPassword = view.findViewById(R.id.input_text_password_sign_up);
-        mLoginButton = view.findViewById(R.id.sign_up_btn);
+        ButterKnife.bind(this, view);
         mLoginButton.setOnClickListener(this);
         return view;
     }

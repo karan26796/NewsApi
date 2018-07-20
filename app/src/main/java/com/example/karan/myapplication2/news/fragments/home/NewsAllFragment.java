@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import com.example.karan.myapplication2.R;
 import com.example.karan.myapplication2.news.adapter.home.HomeViewPagerAdapter;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by karan on 5/3/2018.
  */
@@ -20,6 +23,7 @@ import com.example.karan.myapplication2.news.adapter.home.HomeViewPagerAdapter;
 public class NewsAllFragment extends Fragment {
 
     TabLayout tabLayout;
+    @BindView(R.id.fragment_viewpager)
     ViewPager viewPager;
     String fragmentArray[] = {"Top News", "Business", "Sports", "Health", "Technology"},
             category, categoryArray[] = {"general", "business", "sports", "health", "technology"};
@@ -29,9 +33,9 @@ public class NewsAllFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_al_news, container, false);
+        ButterKnife.bind(this, view);
         tabLayout = getActivity().findViewById(R.id.main_tab_layout);
         tabLayout.setVisibility(View.VISIBLE);
-        viewPager = view.findViewById(R.id.fragment_viewpager);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         return view;
@@ -46,7 +50,7 @@ public class NewsAllFragment extends Fragment {
         HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(getActivity()
                 .getSupportFragmentManager());
         for (int i = 0; i < fragmentArray.length; i++) {
-            adapter.addFragment(new AllNewsFragment("in", categoryArray[i]), fragmentArray[i]);
+            adapter.addFragment(AllNewsFragment.newInstance("in", categoryArray[i]), fragmentArray[i]);
         }
         viewPager.setAdapter(adapter);
     }

@@ -13,6 +13,9 @@ import com.example.karan.myapplication2.model.Options;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by karan on 5/15/2018.
  */
@@ -50,14 +53,14 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionsV
     }
 
     public class OptionsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.text_option)
         TextView mTitle;
+        @BindView(R.id.image_options)
         ImageView mOptionImage;
 
         public OptionsViewHolder(View itemView) {
             super(itemView);
-            mTitle = itemView.findViewById(R.id.text_option);
-            mOptionImage = itemView.findViewById(R.id.image_options);
-
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 

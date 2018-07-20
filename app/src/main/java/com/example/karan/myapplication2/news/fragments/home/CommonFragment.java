@@ -1,6 +1,5 @@
 package com.example.karan.myapplication2.news.fragments.home;
 
-import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,9 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,51 +30,72 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by karan on 5/16/2018.
  */
 
-@SuppressLint("ValidFragment")
 public class CommonFragment extends Fragment implements FirebaseAdapter.onNewsHistoryClickListener
         , SwipeRefreshLayout.OnRefreshListener {
 
     String databaseRef;
-
-    RecyclerView mHistoryRecycler;
-    DatabaseReference mDatabase;
+    DatabaseReference mDatabase, mDeleteReference;
     FirebaseAuth mAuth;
     FirebaseAdapter adapter;
+
+    @BindView(R.id.favorites_recycler)
+    RecyclerView mHistoryRecycler;
+
+    @BindView(R.id.swipeRefreshFavorites)
     SwipeRefreshLayout mSwipeLayout;
+
     CustomTabActivityHelper mCustomTabActivityHelper;
     CustomTabActivityHelper.CustomTabConnectionCallback mConnectionCallback;
 
+    Bundle bundle;
     ArrayList<News> mNewsList = new ArrayList<>();
 
-    public CommonFragment(String databaseRef) {
-        this.databaseRef = databaseRef;
+    public static CommonFragment newInstance(String databaseRef) {
+
+        Bundle args = new Bundle();
+        args.putString("dbref", databaseRef);
+        CommonFragment fragment = new CommonFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
-    @Nullable
+    public CommonFragment() {
+    }
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favorites, container, false);
-        setupCustomTabHelper();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        bundle = getArguments();
+        if (bundle != null && bundle.containsKey("dbref"))
+            this.databaseRef = bundle.getString("dbref");
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null)
             mDatabase = FirebaseDatabase.getInstance()
                     .getReference()
                     .child(databaseRef)
                     .child(mAuth.getCurrentUser().getUid());
+    }
 
-        adapter = new FirebaseAdapter(News.class, R.layout.item_news,
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_favorites, container, false);
+        ButterKnife.bind(this, view);
+        setupCustomTabHelper();
+
+        adapter = new FirebaseAdapter(News.class, R.layout.item_news_bookmark,
                 FirebaseAdapter.ViewHolder.class, mDatabase, mNewsList, this);
-        mSwipeLayout = view.findViewById(R.id.swipeRefreshFavorites);
-        mHistoryRecycler = view.findViewById(R.id.favorites_recycler);
-        mHistoryRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        mHistoryRecycler.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        mHistoryRecycler.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL));
 
-        readData(adapter);
         mSwipeLayout.setOnRefreshListener(this);
+        readData(adapter);
         return view;
     }
 
@@ -99,7 +119,7 @@ public class CommonFragment extends Fragment implements FirebaseAdapter.onNewsHi
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mNewsList.clear();
+                //mNewsList.clear();
                 for (DataSnapshot userDataSnapshot : dataSnapshot.getChildren()) {
                     if (userDataSnapshot != null) {
                         mNewsList.add(userDataSnapshot.getValue(News.class));

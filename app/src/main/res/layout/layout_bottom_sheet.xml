@@ -10,7 +10,5 @@
         android:id="@+id/options_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:paddingStart="@dimen/padding_smaller"
-        android:paddingTop="@dimen/padding_small" />
+        android:layout_gravity="bottom" />
 </LinearLayout>

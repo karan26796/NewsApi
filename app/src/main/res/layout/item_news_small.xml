@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground">
+
+    <com.example.karan.myapplication2.utils.SquareImageView
+        android:id="@+id/image_news"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@android:id/progress"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/image_news"
+        app:layout_constraintEnd_toEndOf="@id/image_news"
+        app:layout_constraintStart_toStartOf="@id/image_news"
+        app:layout_constraintTop_toTopOf="@id/image_news" />
+
+    <TextView
+        android:id="@+id/text_news_headline"
+        style="@style/TextViewHead"
+        android:layout_width="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:maxLines="@null"
+        app:layout_constraintBottom_toTopOf="@+id/text_news_author"
+        app:layout_constraintEnd_toEndOf="@+id/barrier5"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideVertStart"
+        app:layout_constraintTop_toBottomOf="@+id/text_news_date" />
+
+    <TextView
+        android:id="@+id/text_news_date"
+        style="@style/TextViewSubHead"
+        android:layout_width="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:maxLength="@null"
+        app:layout_constraintStart_toStartOf="@+id/guideVertStart"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_news_detail"
+        style="@style/TextViewDetail"
+        android:width="0dp"
+        android:maxLines="2"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideVertStart" />
+
+    <TextView
+        android:id="@+id/text_news_author"
+        style="@style/TextViewSubHead"
+        android:layout_width="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:maxLength="@null"
+        app:layout_constraintBottom_toTopOf="@+id/guideHorEnd"
+        app:layout_constraintEnd_toEndOf="@+id/barrier7"
+        app:layout_constraintStart_toStartOf="@+id/guideVertStart" />
+
+    <ImageButton
+        android:id="@+id/bookmark_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:background="?selectableItemBackgroundBorderless"
+        app:layout_constraintBottom_toTopOf="@+id/guideHorEnd"
+        app:layout_constraintEnd_toEndOf="@+id/barrier5"
+        app:layout_constraintTop_toBottomOf="@+id/text_news_headline"
+        app:srcCompat="@drawable/ic_more_vert" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="image_news" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideVertStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideHorEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="20dp" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="bookmark_btn" />
+
+</android.support.constraint.ConstraintLayout>

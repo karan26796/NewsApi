@@ -22,6 +22,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 
 /**
  * Created by karan on 5/8/2018.
@@ -53,11 +57,20 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
         void onBookmarkClicked(View view, int position, Bundle bundle);
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     @NonNull
     @Override
     public NewsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        int layoutId;
+        if (viewType == 0) {
+            layoutId = R.layout.item_news;
+        } else layoutId = R.layout.item_news_small;
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_news,
+                .inflate(layoutId,
                         parent, false);
         return new NewsAdapter.NewsHolder(itemView);
     }
@@ -81,6 +94,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
         holder.mProgress.setVisibility(View.VISIBLE);
         Picasso.get()
                 .load(mNewsList.get(position).getUrlToImage())
+                .transform(new RoundedCornersTransformation(20, 0, RoundedCornersTransformation.CornerType.ALL))
                 .into(holder.mNewsImage, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -101,26 +115,27 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
     }
 
     public class NewsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView mHead, mAuthor, mDetail, mDate, mSource;
+        @BindView(R.id.text_news_headline)
+        TextView mHead;
+        @BindView(R.id.text_news_author)
+        TextView mAuthor;
+        @BindView(R.id.text_news_detail)
+        TextView mDetail;
+        @BindView(R.id.text_news_date)
+        TextView mDate;
+        @BindView(R.id.image_news)
         ImageView mNewsImage;
+        @BindView(android.R.id.progress)
         ProgressBar mProgress;
+        @BindView(R.id.bookmark_btn)
         ImageButton mBookmarkBtn;
 
         NewsHolder(View itemView) {
             super(itemView);
-
-            mProgress = itemView.findViewById(android.R.id.progress);
-            mHead = itemView.findViewById(R.id.text_news_headline);
-            mAuthor = itemView.findViewById(R.id.text_news_author);
-            mDate = itemView.findViewById(R.id.text_news_date);
-            mDetail = itemView.findViewById(R.id.text_news_detail);
+            ButterKnife.bind(this, itemView);
             //mSource = itemView.findViewById(R.id.text_news_source);
-            mBookmarkBtn = itemView.findViewById(R.id.bookmark_btn);
-
-            mNewsImage = itemView.findViewById(R.id.image_news);
             itemView.setOnClickListener(this);
             mBookmarkBtn.setOnClickListener(this);
-
         }
 
         @Override
@@ -139,8 +154,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
             if (v == mBookmarkBtn) {
                 try {
                     mClickListener.onBookmarkClicked(v, getAdapterPosition(), bundle);
-                    mDatabaseBookmark.child(mNewsList.get(getAdapterPosition()).getDate())
-                            .setValue(mNewsList.get(getAdapterPosition()));
                 } catch (NullPointerException e) {
                     Log.e("news", e.getMessage());
                 }

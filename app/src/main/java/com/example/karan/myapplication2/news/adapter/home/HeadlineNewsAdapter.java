@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,6 +18,10 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 
 /**
@@ -37,28 +42,37 @@ public class HeadlineNewsAdapter extends RecyclerView.Adapter<HeadlineNewsAdapte
         void onNewsClicked(View view, int position, Bundle bundle);
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     @NonNull
     @Override
     public NewsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_news_headlines,
+        int layoutId;
+        View itemView;
+        if (viewType == 0)
+            layoutId = R.layout.item_news_headlines;
+        else layoutId = R.layout.item_news_headlines_small;
+        itemView = LayoutInflater.from(parent.getContext())
+                .inflate(layoutId,
                         parent, false);
         return new HeadlineNewsAdapter.NewsHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final NewsHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final NewsHolder holder, final int position) {
         holder.mHead.setText(mNewsList.get(position).getTitle());
-        //holder.mAuthor.setText(mNewsList.get(position).getAuthor());
-        //holder.mDetail.setText(mNewsList.get(position).getDescription());
-        //holder.mSource.setText(mNewsList.get(position).getSource().getName());
-        String source = "Source: ";
-        holder.mDate.setText(source.concat(mNewsList.get(position).getSource()
-                .getName().concat(" | ")
-                .concat(mNewsList.get(position).getDate().substring(0, 10))));
+        holder.mDate.setText(mNewsList.get(position).getSource().getName());
         holder.mProgress.setVisibility(View.VISIBLE);
+        if (mNewsList.get(position).isBookmarked == 1)
+            holder.bookmarkBtn.setImageResource(R.drawable.ic_bookmark_filled);
+        else holder.bookmarkBtn.setImageResource(R.drawable.ic_bookmark);
+
         Picasso.get()
                 .load(mNewsList.get(position).getUrlToImage())
+                .transform(new RoundedCornersTransformation(20, 0, RoundedCornersTransformation.CornerType.ALL))
                 .into(holder.mNewsImage, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -72,6 +86,19 @@ public class HeadlineNewsAdapter extends RecyclerView.Adapter<HeadlineNewsAdapte
                         holder.mNewsImage.setImageResource(R.drawable.ic_menu_share);
                     }
                 });
+
+        holder.bookmarkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mNewsList.get(position).isBookmarked == 1) {
+                    mNewsList.get(position).setIsBookmarked(0);
+                    notifyItemChanged(position);
+                } else if (mNewsList.get(position).isBookmarked == 0) {
+                    mNewsList.get(position).setIsBookmarked(1);
+                    notifyItemChanged(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -80,21 +107,25 @@ public class HeadlineNewsAdapter extends RecyclerView.Adapter<HeadlineNewsAdapte
     }
 
     public class NewsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView mHead, mAuthor, mDetail, mDate, mSource;
+        @BindView(R.id.text_news_headline_top)
+        TextView mHead;
+        @BindView(R.id.text_news_date_top)
+        TextView mDate;
+        @BindView(R.id.image_news_top)
         ImageView mNewsImage;
+        @BindView(android.R.id.progress)
         ProgressBar mProgress;
+        @BindView(R.id.bookmark_btn)
+        ImageButton bookmarkBtn;
 
         NewsHolder(View itemView) {
             super(itemView);
 
-            mProgress = itemView.findViewById(android.R.id.progress);
-            mHead = itemView.findViewById(R.id.text_news_headline_top);
+            ButterKnife.bind(this, itemView);
             //mAuthor = itemView.findViewById(R.id.text_news_author_top);
-            mDate = itemView.findViewById(R.id.text_news_date_top);
             //mDetail = itemView.findViewById(R.id.text_news_detail_top);
             //mSource = itemView.findViewById(R.id.text_news_source_top);
 
-            mNewsImage = itemView.findViewById(R.id.image_news_top);
             itemView.setOnClickListener(this);
         }
 

@@ -9,8 +9,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -36,13 +34,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by karan on 5/16/2018.
  */
 
 public class SearchFragment extends Fragment implements FirebaseAdapter.onNewsHistoryClickListener, SearchViewHolder.onSearchItemClickListener {
 
+    @BindView(R.id.text_error)
     TextView mErrorText;
+    @BindView(R.id.search_recycler)
     RecyclerView mSearchRecycler;
     TabLayout tabLayout;
     Menu menu;
@@ -61,8 +64,8 @@ public class SearchFragment extends Fragment implements FirebaseAdapter.onNewsHi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+        ButterKnife.bind(this, view);
         setupCustomTabHelper();
-
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null)
             mDatabase = FirebaseDatabase.getInstance()
@@ -72,10 +75,7 @@ public class SearchFragment extends Fragment implements FirebaseAdapter.onNewsHi
 
         tabLayout = getActivity().findViewById(R.id.main_tab_layout);
         tabLayout.setVisibility(View.GONE);
-        mErrorText = view.findViewById(R.id.text_error);
-        mSearchRecycler = view.findViewById(R.id.search_recycler);
         mSearchRecycler.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayout.VERTICAL));
-        //mSearchRecycler.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         return view;
     }
 

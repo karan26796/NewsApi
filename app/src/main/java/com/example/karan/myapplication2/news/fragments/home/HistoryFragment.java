@@ -14,14 +14,21 @@ import android.view.ViewGroup;
 import com.example.karan.myapplication2.R;
 import com.example.karan.myapplication2.news.adapter.home.HomeViewPagerAdapter;
 
+import java.util.Objects;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by karan on 5/3/2018.
  */
 
 @SuppressLint("ValidFragment")
 public class HistoryFragment extends Fragment {
+
     String text;
     TabLayout tabLayout;
+    @BindView(R.id.favorites_viewpager)
     ViewPager viewPager;
     String fragmentArray[] = {"Bookmarks", "History", "ABC News"};
 
@@ -34,9 +41,9 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_common, container, false);
-        tabLayout = getActivity().findViewById(R.id.main_tab_layout);
+        ButterKnife.bind(this, view);
+        tabLayout = Objects.requireNonNull(getActivity()).findViewById(R.id.main_tab_layout);
         tabLayout.setVisibility(View.VISIBLE);
-        viewPager = view.findViewById(R.id.favorites_viewpager);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         return view;
@@ -48,11 +55,11 @@ public class HistoryFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(getActivity()
+        HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(Objects.requireNonNull(getActivity())
                 .getSupportFragmentManager());
 
-        adapter.addFragment(new CommonFragment(fragmentArray[0]), fragmentArray[0]);
-        adapter.addFragment(new CommonFragment(fragmentArray[1]), fragmentArray[1]);
+        adapter.addFragment(CommonFragment.newInstance(fragmentArray[0]), fragmentArray[0]);
+        adapter.addFragment(CommonFragment.newInstance(fragmentArray[1]), fragmentArray[1]);
         adapter.addFragment(new SourcesFragment(), fragmentArray[2]);
         viewPager.setAdapter(adapter);
     }

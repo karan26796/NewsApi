@@ -7,6 +7,7 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_smaller"
@@ -24,6 +25,7 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputLayout2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_smaller"
@@ -46,6 +48,7 @@
         style="@style/Button"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/libre_franklin_bold"
         android:text="Login"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout2"

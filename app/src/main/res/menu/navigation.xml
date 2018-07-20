@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_trending"
+        android:icon="@drawable/ic_top_news"
         android:title="@string/title_headlines"
         app:showAsAction="always|withText" />
 
@@ -18,7 +18,7 @@
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/heart_outline"
+        android:icon="@drawable/ic_favorite"
         android:title="@string/title_favorites"
         app:showAsAction="always|withText" />
     <item

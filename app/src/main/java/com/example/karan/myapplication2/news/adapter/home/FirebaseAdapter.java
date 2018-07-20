@@ -44,7 +44,7 @@ public class FirebaseAdapter extends FirebaseRecyclerAdapter<News, FirebaseAdapt
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news_bookmark, parent, false);
 
         return new ViewHolder(itemView);
     }
