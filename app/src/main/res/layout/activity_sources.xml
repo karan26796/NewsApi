@@ -34,6 +34,7 @@
 
             <android.support.design.chip.ChipGroup
                 android:id="@+id/chip_group"
+                style="@style/Widget.MaterialComponents.ChipGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>

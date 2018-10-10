@@ -26,7 +26,7 @@ public class TopSourcesAdapter extends RecyclerView.Adapter<TopSourcesAdapter.So
     TopSources topSources = null;
 
     public interface OnSourceClicked {
-        void onItemClilcked(int position);
+        void onItemClicked(int position);
     }
 
     public TopSourcesAdapter(OnSourceClicked mListener, ArrayList<TopSources> mList) {
@@ -88,7 +88,7 @@ public class TopSourcesAdapter extends RecyclerView.Adapter<TopSourcesAdapter.So
             } else
                 topSources = mList.get(getAdapterPosition());
 
-            mListener.onItemClilcked(getAdapterPosition());
+            mListener.onItemClicked(getAdapterPosition());
         }
     }
 }

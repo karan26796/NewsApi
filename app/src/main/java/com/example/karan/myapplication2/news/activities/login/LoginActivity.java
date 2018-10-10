@@ -5,20 +5,30 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.karan.myapplication2.R;
 import com.example.karan.myapplication2.news.activities.BaseActivity;
 import com.example.karan.myapplication2.news.activities.home.MainActivity;
 import com.example.karan.myapplication2.news.adapter.home.HomeViewPagerAdapter;
+import com.example.karan.myapplication2.news.fragments.login.OnLoginClickListener;
 import com.example.karan.myapplication2.news.fragments.login.SignInFragment;
 import com.example.karan.myapplication2.news.fragments.login.SignUpFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
+public class LoginActivity extends BaseActivity implements View.OnClickListener
+        , OnLoginClickListener {
+
+    @BindView(R.id.tab_layout_login)
     TabLayout mTabLayout;
+    @BindView(R.id.login_viewpager)
     ViewPager mViewPager;
+    @BindView(R.id.progressBar5)
+    ProgressBar progressBar;
 
     @Override
     protected void onStart() {
@@ -36,10 +46,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
         setUpToolbar(1);
-
-        mTabLayout = findViewById(R.id.tab_layout_login);
-        mViewPager = findViewById(R.id.login_viewpager);
 
         setmViewPager(mViewPager);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -60,5 +68,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         viewPagerAdapter.addFragment(new SignUpFragment(), "Sign Up");
 
         viewPager.setAdapter(viewPagerAdapter);
+    }
+
+    @Override
+    public void onLoginStart() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onLoginEnd() {
+        progressBar.setVisibility(View.GONE);
     }
 }

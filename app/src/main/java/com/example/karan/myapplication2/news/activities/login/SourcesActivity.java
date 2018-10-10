@@ -3,12 +3,12 @@ package com.example.karan.myapplication2.news.activities.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.chip.Chip;
+import android.support.design.chip.ChipDrawable;
 import android.support.design.chip.ChipGroup;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 
 import com.example.karan.myapplication2.R;
 import com.example.karan.myapplication2.model.Sources;
@@ -26,8 +26,9 @@ public class SourcesActivity extends BaseActivity {
 
     @BindView(R.id.sources_recycler)
     RecyclerView recyclerView;
-    List<Sources> mSourcesList;
+    @BindView(R.id.chip_group)
     ChipGroup chipGroup;
+    List<Sources> mSourcesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +37,7 @@ public class SourcesActivity extends BaseActivity {
         ButterKnife.bind(this);
         setUpToolbar(0);
         mSourcesList = new ArrayList<>();
-        chipGroup = new ChipGroup(this);
-        for (int i = 0; i < 10; i++) {
-            Chip chip = new Chip(this, null, R.style.Chip);
-            chipGroup.setSingleLine(false);
-            chip.setId(i);
-            chip.setText("Chip" + i);
-            chip.isCheckable();
-            chip.setCloseIconEnabled(true);
-            chipGroup.addView(chip);
-        }
-        ((ViewGroup) findViewById(R.id.chip_group)).addView(chipGroup);
+        initChipGroup(chipGroup);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS, 0));
         setRecyclerView();
         recyclerView.setAdapter(new SourcesAdapter(mSourcesList));
@@ -81,4 +72,17 @@ public class SourcesActivity extends BaseActivity {
         return R.id.activity_sources_toolbar;
     }
 
+    private void initChipGroup(ChipGroup chipGroup) {
+        chipGroup.removeAllViews();
+
+        String[] textArray = getResources().getStringArray(R.array.news_sources);
+        for (String text : textArray) {
+            Chip chip = (Chip) getLayoutInflater().inflate(R.layout.cat_chip_group_item_filter, chipGroup, false);
+            chip.setChipText(text);
+            ChipDrawable chipDrawable = ChipDrawable.createFromResource(this, R.xml.chip_drawable);
+            chipDrawable.setBounds(0, 0, chipDrawable.getIntrinsicWidth(), chipDrawable.getIntrinsicHeight());
+            //chip.setChipDrawable(chipDrawable);
+            chipGroup.addView(chip);
+        }
+    }
 }

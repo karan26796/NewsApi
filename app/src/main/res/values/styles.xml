@@ -24,7 +24,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="Button" parent="Widget.AppCompat.Button.Colored">
+    <style name="Button" parent="Widget.AppCompat.Button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:padding">@dimen/padding_small</item>
         <item name="android:layout_margin">@dimen/margin_small</item>
@@ -82,6 +82,15 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/md_white_1000</item>
     </style>
+
+    <style name="MyProgressBarTwo" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="colorButtonNormal">#f50057</item>
+        <item name="colorControlActivated">#33691e</item>
+        <item name="colorControlHighlight">#ff6d00</item>
+        <item name="android:progressDrawable">@drawable/progress_drawable</item>
+        <item name="android:minWidth">200dp</item>
+    </style>
+
 
     <style name="Theme.AppCompat.Dialog.">
         <item name="android:buttonStyle">@style/Widget.MaterialComponents.Button.TextButton.Dialog

@@ -157,7 +157,7 @@ public class TopNewsFragment extends android.support.v4.app.Fragment implements 
     }
 
     @Override
-    public void onItemClilcked(int position) {
+    public void onItemClicked(int position) {
         adapter.notifyDataSetChanged();
     }
 
